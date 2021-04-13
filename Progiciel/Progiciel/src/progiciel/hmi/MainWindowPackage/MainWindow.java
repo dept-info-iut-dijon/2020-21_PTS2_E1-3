@@ -5,6 +5,12 @@
  */
 package progiciel.hmi.MainWindowPackage;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author margu
@@ -21,20 +27,23 @@ public class MainWindow extends javax.swing.JFrame {
         setDisplay();
     }
     
-    
+    /**
+     * Retorune le nom de l'utilisateur
+     * @return 
+     */
+    public String getName(){
+        return this.name;
+    }
     /**
      * Permet d'afficher les éléments en fonction de si l'utilisateur est connecté
      */
     public void setDisplay(){
         if(this.name == null){
             popUp popup = new popUp();
-            popup.setVisible(true);
-        }
-        if(this.name != null){
-            
+            popup.setVisible(true);   
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,6 +59,12 @@ public class MainWindow extends javax.swing.JFrame {
         jakovaLabel = new javax.swing.JLabel();
         supportBtn = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
+        logoutBtn = new javax.swing.JButton();
+        profilBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lastEditedProject = new javax.swing.JTable();
+        welcomeLabel = new javax.swing.JLabel();
+        tableLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         homeMenu = new javax.swing.JMenu();
         homeBtn = new javax.swing.JMenuItem();
@@ -80,6 +95,11 @@ public class MainWindow extends javax.swing.JFrame {
         supportBtn.setBorderPainted(false);
         supportBtn.setFocusPainted(false);
         supportBtn.setOpaque(false);
+        supportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supportBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout lowerPanelLayout = new javax.swing.GroupLayout(lowerPanel);
         lowerPanel.setLayout(lowerPanelLayout);
@@ -106,22 +126,97 @@ public class MainWindow extends javax.swing.JFrame {
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/progiciel/hmi/images/logo.png"))); // NOI18N
 
+        logoutBtn.setBackground(new java.awt.Color(255, 51, 51));
+        logoutBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
+        logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        logoutBtn.setText("Disconnect");
+        logoutBtn.setBorderPainted(false);
+        logoutBtn.setFocusPainted(false);
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
+
+        profilBtn.setBackground(new java.awt.Color(237, 132, 38));
+        profilBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
+        profilBtn.setForeground(new java.awt.Color(255, 255, 255));
+        profilBtn.setText("My Profil");
+        profilBtn.setBorderPainted(false);
+        profilBtn.setFocusPainted(false);
+        profilBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profilBtnActionPerformed(evt);
+            }
+        });
+
+        lastEditedProject.setBackground(new java.awt.Color(153, 153, 153));
+        lastEditedProject.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Project", "Summary"
+            }
+        ));
+        jScrollPane1.setViewportView(lastEditedProject);
+
+        welcomeLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 48)); // NOI18N
+        welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
+        welcomeLabel.setText("Welcome !");
+
+        tableLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 48)); // NOI18N
+        tableLabel.setForeground(new java.awt.Color(255, 255, 255));
+        tableLabel.setText("Last edited projects :");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lowerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(logo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(welcomeLabel)
+                .addGap(208, 208, 208)
+                .addComponent(profilBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logoutBtn)
+                .addGap(12, 12, 12))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(194, 194, 194)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tableLabel)
+                .addGap(396, 396, 396))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(logo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 548, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(logo)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(logoutBtn)
+                                    .addComponent(profilBtn)))))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(welcomeLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(tableLabel)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -173,6 +268,25 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_homeMenuActionPerformed
 
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutBtnActionPerformed
+
+    private void profilBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_profilBtnActionPerformed
+
+    private void supportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supportBtnActionPerformed
+        Desktop desktop = Desktop.getDesktop();
+        String message = "mailto:Valentin_Marguerie@etu.u-bourgogne.fr?subject=Support%20Email";
+        URI uri = URI.create(message);
+        try {
+            desktop.mail(uri);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_supportBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -203,7 +317,9 @@ public class MainWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWindow().setVisible(true);
+                MainWindow mainwindow = new MainWindow();
+                if(mainwindow.getName() == null) mainwindow.setVisible(false);
+                if(mainwindow.getName() != null) mainwindow.setVisible(true);
             }
         });
     }
@@ -212,13 +328,19 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem homeBtn;
     private javax.swing.JMenu homeMenu;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jakovaLabel;
+    private javax.swing.JTable lastEditedProject;
     private javax.swing.JLabel logo;
+    private javax.swing.JButton logoutBtn;
     private javax.swing.JPanel lowerPanel;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton profilBtn;
     private javax.swing.JLabel progicielLabel;
     private javax.swing.JMenuItem projectsBtn;
     private javax.swing.JButton supportBtn;
+    private javax.swing.JLabel tableLabel;
     private javax.swing.JMenuItem techBtn;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
