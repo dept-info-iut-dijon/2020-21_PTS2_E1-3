@@ -23,17 +23,28 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
-        this.name = null;
+        this.name = null ;
         setDisplay();
     }
     
     /**
-     * Retorune le nom de l'utilisateur
+     * Create new form MainWindow 
+     * @param name Username
+     */
+    public MainWindow(String name){
+        initComponents();
+        this.name = name;
+        setDisplay();
+    }
+    
+    /**
+     * Retourne le nom de l'utilisateur
      * @return 
      */
     public String getName(){
         return this.name;
     }
+    
     /**
      * Permet d'afficher les éléments en fonction de si l'utilisateur est connecté
      */
@@ -42,6 +53,35 @@ public class MainWindow extends javax.swing.JFrame {
             popUp popup = new popUp();
             popup.setVisible(true);   
         }
+    }
+    
+    /**
+     * Permet d'ouvir le pop up de deconnexion 
+     */
+    public void Disconnect(){
+        Disconnect disconnect = new Disconnect();
+        disconnect.setVisible(true);
+    }
+    
+    /**
+     * Permet d'éditer son profil 
+     */
+    public void editProfil(){
+        
+    }
+    
+    /**
+     * Permet de voir la liste des projets
+     */
+    public void projects(){
+        
+    }
+    
+    /**
+     * Permet de voir la liste des techniciens 
+     */
+    public void viewTechs(){
+        
     }
     
     /**
@@ -238,9 +278,19 @@ public class MainWindow extends javax.swing.JFrame {
         homeMenu.add(homeBtn);
 
         techBtn.setText("Techniciens ");
+        techBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                techBtnActionPerformed(evt);
+            }
+        });
         homeMenu.add(techBtn);
 
         projectsBtn.setText("Projects");
+        projectsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                projectsBtnActionPerformed(evt);
+            }
+        });
         homeMenu.add(projectsBtn);
 
         jMenuBar1.add(homeMenu);
@@ -265,11 +315,11 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeMenuActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_homeMenuActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-        // TODO add your handling code here:
+        Disconnect();
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void profilBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilBtnActionPerformed
@@ -286,6 +336,14 @@ public class MainWindow extends javax.swing.JFrame {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_supportBtnActionPerformed
+
+    private void techBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_techBtnActionPerformed
+        viewTechs();
+    }//GEN-LAST:event_techBtnActionPerformed
+
+    private void projectsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectsBtnActionPerformed
+        projects();
+    }//GEN-LAST:event_projectsBtnActionPerformed
 
     /**
      * @param args the command line arguments

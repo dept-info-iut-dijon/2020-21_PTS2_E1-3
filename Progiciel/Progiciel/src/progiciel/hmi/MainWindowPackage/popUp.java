@@ -6,6 +6,8 @@
 
 package progiciel.hmi.MainWindowPackage;
 
+import progiciel.hmi.LoginWindowPackage.LoginWindow;
+
 /**
  *
  * @author margu
@@ -15,6 +17,14 @@ public class popUp extends javax.swing.JFrame {
     /** Creates new form popUp */
     public popUp() {
         initComponents();
+    }
+    
+    /**
+     * Permet de se connecter, ouvre la page de connexion 
+     */
+    public void Connect(){
+        LoginWindow loginwindow = new LoginWindow();
+        loginwindow.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -41,7 +51,7 @@ public class popUp extends javax.swing.JFrame {
 
         mainPanel.setBackground(new java.awt.Color(46, 48, 47));
 
-        connectLabel.setFont(new java.awt.Font("Brush Script MT", 1, 36)); // NOI18N
+        connectLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
         connectLabel.setForeground(new java.awt.Color(255, 255, 255));
         connectLabel.setText("You are not connected:");
 
@@ -74,23 +84,23 @@ public class popUp extends javax.swing.JFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(219, 219, 219)
-                        .addComponent(connectLabel))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(252, 252, 252)
-                        .addComponent(plsLogInLabel)))
-                .addContainerGap(237, Short.MAX_VALUE))
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(logo)
-                        .addGap(139, 139, 139)
+                        .addGap(150, 150, 150)
                         .addComponent(welcomeLabel))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(319, 319, 319)
                         .addComponent(loginBtn)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 260, Short.MAX_VALUE))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(183, 183, 183)
+                        .addComponent(connectLabel))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(plsLogInLabel)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,16 +109,16 @@ public class popUp extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(logo)
-                        .addGap(31, 31, 31))
+                        .addGap(157, 157, 157))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addComponent(welcomeLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(connectLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(plsLogInLabel)
                         .addGap(18, 18, 18)))
-                .addComponent(connectLabel)
-                .addGap(18, 18, 18)
-                .addComponent(plsLogInLabel)
-                .addGap(18, 18, 18)
                 .addComponent(loginBtn)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -126,7 +136,7 @@ public class popUp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // TODO add your handling code here:
+        Connect();
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
