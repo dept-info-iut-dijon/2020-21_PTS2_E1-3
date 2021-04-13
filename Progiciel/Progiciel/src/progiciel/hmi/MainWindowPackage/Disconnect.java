@@ -40,7 +40,7 @@ public class Disconnect extends javax.swing.JFrame {
 
         disconnectLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
         disconnectLabel.setForeground(new java.awt.Color(255, 255, 255));
-        disconnectLabel.setText("Do you want to disconnect ?");
+        disconnectLabel.setText("Do you wish to disconnect ?");
 
         disconnectBtn.setBackground(new java.awt.Color(255, 0, 0));
         disconnectBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
@@ -57,7 +57,7 @@ public class Disconnect extends javax.swing.JFrame {
         homeBtn.setBackground(new java.awt.Color(237, 132, 38));
         homeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
         homeBtn.setForeground(new java.awt.Color(255, 255, 255));
-        homeBtn.setText("Go home");
+        homeBtn.setText("Cancel");
         homeBtn.setBorderPainted(false);
         homeBtn.setFocusPainted(false);
         homeBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -66,29 +66,28 @@ public class Disconnect extends javax.swing.JFrame {
             }
         });
 
-        connectLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        connectLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
         connectLabel.setForeground(new java.awt.Color(255, 255, 255));
-        connectLabel.setText("You are not connected:");
+        connectLabel.setText("This is going to close the software");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(connectLabel)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(disconnectLabel)
-                        .addGap(53, 53, 53))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(homeBtn)
-                .addGap(35, 35, 35)
-                .addComponent(disconnectBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(homeBtn)
+                        .addGap(47, 47, 47)
+                        .addComponent(disconnectBtn))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(connectLabel))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(disconnectLabel)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,11 +96,11 @@ public class Disconnect extends javax.swing.JFrame {
                 .addComponent(disconnectLabel)
                 .addGap(18, 18, 18)
                 .addComponent(connectLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(disconnectBtn)
                     .addComponent(homeBtn))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
