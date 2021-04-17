@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import progiciel.hmi.ProjectsWindowPackage.ProjectsWindow;
 
 /**
  *
@@ -74,7 +75,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Permet de voir la liste des projets
      */
     public void projects(){
-        
+        ProjectsWindow projectswindow = new ProjectsWindow();
+        projectswindow.setVisible(true);
     }
     
     /**
