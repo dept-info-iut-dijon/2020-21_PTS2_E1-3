@@ -30,19 +30,23 @@ public class ProfileWindow extends javax.swing.JFrame {
         MainPanel = new javax.swing.JPanel();
         title = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
-        nameVariable = new javax.swing.JLabel();
         login = new javax.swing.JLabel();
-        loginVariable = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
+        password = new javax.swing.JLabel();
+        nameVariable = new javax.swing.JTextField();
+        loginVariable = new javax.swing.JTextField();
+        passwordVariable = new javax.swing.JPasswordField();
+        homeBtn = new javax.swing.JButton();
+        confirmBtn = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Your profile");
         setMaximumSize(new java.awt.Dimension(100000, 1000000));
-        setPreferredSize(new java.awt.Dimension(750, 270));
         setResizable(false);
-        setSize(new java.awt.Dimension(750, 270));
+        setSize(new java.awt.Dimension(800, 450));
 
         MainPanel.setBackground(new java.awt.Color(46, 48, 47));
-        MainPanel.setPreferredSize(new java.awt.Dimension(750, 255));
+        MainPanel.setPreferredSize(new java.awt.Dimension(750, 350));
 
         title.setFont(new java.awt.Font("Gill Sans MT", 1, 48)); // NOI18N
         title.setForeground(new java.awt.Color(255, 255, 255));
@@ -52,74 +56,149 @@ public class ProfileWindow extends javax.swing.JFrame {
         name.setForeground(new java.awt.Color(255, 255, 255));
         name.setText("Name :");
 
-        nameVariable.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
-        nameVariable.setForeground(new java.awt.Color(255, 255, 255));
-        nameVariable.setText("Placeholder");
-
         login.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
         login.setForeground(new java.awt.Color(255, 255, 255));
         login.setText("Login :");
 
-        loginVariable.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
-        loginVariable.setForeground(new java.awt.Color(255, 255, 255));
-        loginVariable.setText("Placeholder");
-
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/progiciel/hmi/images/logo.png"))); // NOI18N
+
+        password.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        password.setForeground(new java.awt.Color(255, 255, 255));
+        password.setText("Password :");
+
+        nameVariable.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        nameVariable.setText("PlaceHolderName");
+        nameVariable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameVariableActionPerformed(evt);
+            }
+        });
+
+        loginVariable.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        loginVariable.setText("PlaceHolderLogin");
+
+        passwordVariable.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        passwordVariable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordVariableActionPerformed(evt);
+            }
+        });
+
+        homeBtn.setBackground(new java.awt.Color(237, 0, 0));
+        homeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
+        homeBtn.setForeground(new java.awt.Color(255, 255, 255));
+        homeBtn.setText("Cancel");
+        homeBtn.setBorderPainted(false);
+        homeBtn.setFocusPainted(false);
+        homeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeBtnActionPerformed(evt);
+            }
+        });
+
+        confirmBtn.setBackground(new java.awt.Color(0, 255, 0));
+        confirmBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
+        confirmBtn.setForeground(new java.awt.Color(255, 255, 255));
+        confirmBtn.setText("Confirm");
+        confirmBtn.setBorderPainted(false);
+        confirmBtn.setFocusPainted(false);
+        confirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(25, 25, 25)
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(180, 180, 180)
+                .addGap(217, 217, 217)
                 .addComponent(title)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
-                .addContainerGap(177, Short.MAX_VALUE)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addComponent(login)
-                        .addGap(100, 100, 100)
-                        .addComponent(loginVariable))
-                    .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addComponent(name)
-                        .addGap(100, 100, 100)
-                        .addComponent(nameVariable)))
-                .addGap(150, 150, 150))
+                .addContainerGap(191, Short.MAX_VALUE)
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
+                        .addComponent(homeBtn)
+                        .addGap(47, 47, 47)
+                        .addComponent(confirmBtn)
+                        .addGap(239, 239, 239))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
+                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(MainPanelLayout.createSequentialGroup()
+                                .addComponent(password)
+                                .addGap(18, 18, 18)
+                                .addComponent(passwordVariable))
+                            .addGroup(MainPanelLayout.createSequentialGroup()
+                                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(name)
+                                    .addComponent(login))
+                                .addGap(74, 74, 74)
+                                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(loginVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nameVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(86, 86, 86))))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title)
-                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(title)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(name)
-                    .addComponent(nameVariable))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(nameVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(login)
-                    .addComponent(loginVariable))
-                .addGap(17, 17, 17))
+                    .addComponent(loginVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(login))
+                .addGap(18, 18, 18)
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(password)
+                    .addComponent(passwordVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(confirmBtn)
+                    .addComponent(homeBtn))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
+        dispose();
+    }//GEN-LAST:event_homeBtnActionPerformed
+
+    private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        System.exit(0); //Ferme le programme
+    }//GEN-LAST:event_confirmBtnActionPerformed
+
+    private void nameVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameVariableActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameVariableActionPerformed
+
+    private void passwordVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordVariableActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordVariableActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,11 +237,15 @@ public class ProfileWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JButton confirmBtn;
+    private javax.swing.JButton homeBtn;
     private javax.swing.JLabel login;
-    private javax.swing.JLabel loginVariable;
+    private javax.swing.JTextField loginVariable;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel name;
-    private javax.swing.JLabel nameVariable;
+    private javax.swing.JTextField nameVariable;
+    private javax.swing.JLabel password;
+    private javax.swing.JPasswordField passwordVariable;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
