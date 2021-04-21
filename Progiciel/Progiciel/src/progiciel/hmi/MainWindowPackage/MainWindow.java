@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import progiciel.hmi.ProfileWindow.ProfileWindow;
 import progiciel.hmi.ProjectsWindowPackage.ProjectsWindow;
+import progiciel.hmi.TechsWindow.TechsWindow;
 
 /**
  *
@@ -24,7 +26,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
-        this.name = null ;
+        this.name = null;
         setDisplay();
     }
     
@@ -65,10 +67,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     /**
-     * Permet d'éditer son profil 
+     * Permet d'éditer son profil
      */
-    public void editProfil(){
-        
+    public void editProfile(){
+        ProfileWindow profilewindow = new ProfileWindow();
+        profilewindow.setVisible(true);
     }
     
     /**
@@ -83,7 +86,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Permet de voir la liste des techniciens 
      */
     public void viewTechs(){
-        
+        TechsWindow techswindow = new TechsWindow();
+        techswindow.setVisible(true);
     }
     
     /**
@@ -325,7 +329,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void profilBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profilBtnActionPerformed
-        // TODO add your handling code here:
+        editProfile();
     }//GEN-LAST:event_profilBtnActionPerformed
 
     private void supportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supportBtnActionPerformed
