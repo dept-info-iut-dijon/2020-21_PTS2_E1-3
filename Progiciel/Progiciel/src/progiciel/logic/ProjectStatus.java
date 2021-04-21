@@ -9,7 +9,7 @@ package progiciel.logic;
  *  Énumération des status possibles pour un projet 
  * @author margu
  */
-public enum ProjectsStatus {
+public enum ProjectStatus {
     ENDED,
     WAITING,
     WORKING,
