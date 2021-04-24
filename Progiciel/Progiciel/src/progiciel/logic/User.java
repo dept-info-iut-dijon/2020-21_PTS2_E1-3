@@ -31,7 +31,13 @@ public class User {
      * @param u the user from whom to copy the details
      */
     public void Copy(User u){
-        
+        this.ID = u.getID();
+        this.login = u.getLogin();
+        this.passwordHash = u.getPasswordHash();
+        this.lastName = u.getLastName();
+        this.firstName = u.getFirstName();
+        this.isConnected = u.isConnected();
+        this.isChief = u.isChief();
     }
     
     /**
@@ -89,11 +95,11 @@ public class User {
         return firstName;
     }
 
-    public boolean isIsConnected() {
+    public boolean isConnected() {
         return isConnected;
     }
 
-    public boolean isIsChief() {
+    public boolean isChief() {
         return isChief;
     }
 }
