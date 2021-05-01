@@ -5,17 +5,46 @@
  */
 package progiciel.hmi.ProfileWindow;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import progiciel.logic.User;
+import progiciel.logic.Utils;
+
 /**
  *
  * @author bkott
  */
 public class ProfileWindow extends javax.swing.JFrame {
-
+    
+    User user;
     /**
      * Creates new form ProfileWindow
+     * @param user
      */
-    public ProfileWindow() {
+    public ProfileWindow(User user) {
+        this.user = user;
         initComponents();
+        setField();
+        
+    }
+
+    /**
+     * Create new form ProfileWindow 
+     */
+    public ProfileWindow(){
+        initComponents();
+    }
+    
+    /**
+     * Permet de set les textes des champs 
+     */
+    private void setField(){
+        this.loginField.setText(this.user.getLogin());
     }
 
     /**
@@ -29,15 +58,15 @@ public class ProfileWindow extends javax.swing.JFrame {
 
         MainPanel = new javax.swing.JPanel();
         title = new javax.swing.JLabel();
-        name = new javax.swing.JLabel();
         login = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         password = new javax.swing.JLabel();
-        nameVariable = new javax.swing.JTextField();
-        loginVariable = new javax.swing.JTextField();
-        passwordVariable = new javax.swing.JPasswordField();
+        loginField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
         homeBtn = new javax.swing.JButton();
         confirmBtn = new javax.swing.JButton();
+        confirmationField = new javax.swing.JPasswordField();
+        password1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Your profile");
@@ -52,10 +81,6 @@ public class ProfileWindow extends javax.swing.JFrame {
         title.setForeground(new java.awt.Color(255, 255, 255));
         title.setText("Profile");
 
-        name.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
-        name.setForeground(new java.awt.Color(255, 255, 255));
-        name.setText("Name :");
-
         login.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
         login.setForeground(new java.awt.Color(255, 255, 255));
         login.setText("Login :");
@@ -66,21 +91,13 @@ public class ProfileWindow extends javax.swing.JFrame {
         password.setForeground(new java.awt.Color(255, 255, 255));
         password.setText("Password :");
 
-        nameVariable.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
-        nameVariable.setText("PlaceHolderName");
-        nameVariable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameVariableActionPerformed(evt);
-            }
-        });
+        loginField.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        loginField.setText("PlaceHolderLogin");
 
-        loginVariable.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
-        loginVariable.setText("PlaceHolderLogin");
-
-        passwordVariable.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
-        passwordVariable.addActionListener(new java.awt.event.ActionListener() {
+        passwordField.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordVariableActionPerformed(evt);
+                passwordFieldActionPerformed(evt);
             }
         });
 
@@ -108,77 +125,84 @@ public class ProfileWindow extends javax.swing.JFrame {
             }
         });
 
+        confirmationField.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        confirmationField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmationFieldActionPerformed(evt);
+            }
+        });
+
+        password1.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        password1.setForeground(new java.awt.Color(255, 255, 255));
+        password1.setText("Password confirmation:");
+
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(217, 217, 217)
-                .addComponent(title)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
-                .addContainerGap(191, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
-                        .addComponent(homeBtn)
-                        .addGap(47, 47, 47)
-                        .addComponent(confirmBtn)
-                        .addGap(239, 239, 239))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
-                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(MainPanelLayout.createSequentialGroup()
-                                .addComponent(password)
-                                .addGap(18, 18, 18)
-                                .addComponent(passwordVariable))
-                            .addGroup(MainPanelLayout.createSequentialGroup()
-                                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(name)
-                                    .addComponent(login))
-                                .addGap(74, 74, 74)
-                                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(loginVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nameVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(86, 86, 86))))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(login, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(password, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(password1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loginField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(MainPanelLayout.createSequentialGroup()
+                                    .addComponent(homeBtn)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(confirmBtn))
+                                .addComponent(confirmationField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(222, 222, 222)
+                        .addComponent(title)))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(title)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(title)
+                        .addGap(34, 34, 34)))
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(name)
-                    .addComponent(nameVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loginField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(login))
                 .addGap(18, 18, 18)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(password)
-                    .addComponent(passwordVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmBtn)
-                    .addComponent(homeBtn))
-                .addGap(35, 35, 35))
+                    .addComponent(confirmationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(password1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(homeBtn)
+                    .addComponent(confirmBtn))
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
         );
 
         pack();
@@ -192,13 +216,13 @@ public class ProfileWindow extends javax.swing.JFrame {
         System.exit(0); //Ferme le programme
     }//GEN-LAST:event_confirmBtnActionPerformed
 
-    private void nameVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameVariableActionPerformed
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nameVariableActionPerformed
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void passwordVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordVariableActionPerformed
+    private void confirmationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmationFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordVariableActionPerformed
+    }//GEN-LAST:event_confirmationFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,14 +262,14 @@ public class ProfileWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainPanel;
     private javax.swing.JButton confirmBtn;
+    private javax.swing.JPasswordField confirmationField;
     private javax.swing.JButton homeBtn;
     private javax.swing.JLabel login;
-    private javax.swing.JTextField loginVariable;
+    private javax.swing.JTextField loginField;
     private javax.swing.JLabel logo;
-    private javax.swing.JLabel name;
-    private javax.swing.JTextField nameVariable;
     private javax.swing.JLabel password;
-    private javax.swing.JPasswordField passwordVariable;
+    private javax.swing.JLabel password1;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

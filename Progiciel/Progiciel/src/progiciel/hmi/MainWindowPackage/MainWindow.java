@@ -20,14 +20,14 @@ import progiciel.logic.User;
  * @author margu
  */
 public class MainWindow extends javax.swing.JFrame {
-    private User name;
+    private User user;
 
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         initComponents();
-        this.name = null;
+        this.user = null;
         setDisplay();
     }
     
@@ -38,7 +38,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow(User user){
         initComponents();
-        this.name = user;
+        this.user = user;
         setDisplay();
     }
     
@@ -46,14 +46,14 @@ public class MainWindow extends javax.swing.JFrame {
      * Permet d'afficher les éléments en fonction de si l'utilisateur est connecté
      */
     public void setDisplay(){
-        if(this.name == null){
+        if(this.user == null){
             popUp popup = new popUp();
             popup.setVisible(true);   
         }
     }
     
     public boolean isUserConnected(){
-        return (this.name != null);
+        return (this.user != null);
     }
     /**
      * Permet d'ouvir le pop up de deconnexion 
@@ -67,7 +67,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Permet d'éditer son profil
      */
     public void editProfile(){
-        ProfileWindow profilewindow = new ProfileWindow();
+        ProfileWindow profilewindow = new ProfileWindow(this.user);
         profilewindow.setVisible(true);
     }
     

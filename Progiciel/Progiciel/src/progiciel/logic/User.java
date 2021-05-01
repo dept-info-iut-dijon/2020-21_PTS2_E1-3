@@ -5,6 +5,14 @@
  */
 package progiciel.logic;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Class representing an user
  * @author Bastien Kotte
@@ -23,7 +31,22 @@ public class User {
      * @param id 
      */
     public User(int id){
-        
+        try {
+            this.ID = id;
+            
+            //Connection to the DB
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ResultSet myRs = ident.executeQuery("SELECT LOGIN FROM utilisateur WHERE ID="+this.ID);
+            
+            //Attributions des résultats de la requête 
+            while(myRs.next()){
+                System.out.println(myRs.getString("LOGIN"));
+                this.login = myRs.getString("LOGIN");         
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
