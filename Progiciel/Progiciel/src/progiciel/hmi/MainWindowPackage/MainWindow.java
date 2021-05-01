@@ -13,13 +13,14 @@ import java.util.logging.Logger;
 import progiciel.hmi.ProfileWindow.ProfileWindow;
 import progiciel.hmi.ProjectsWindowPackage.ProjectsWindow;
 import progiciel.hmi.TechsWindow.TechsWindow;
+import progiciel.logic.User;
 
 /**
  *
  * @author margu
  */
 public class MainWindow extends javax.swing.JFrame {
-    private String name;
+    private User name;
 
     /**
      * Creates new form MainWindow
@@ -32,20 +33,13 @@ public class MainWindow extends javax.swing.JFrame {
     
     /**
      * Create new form MainWindow 
+     * @param user
      * @param name Username
      */
-    public MainWindow(String name){
+    public MainWindow(User user){
         initComponents();
-        this.name = name;
+        this.name = user;
         setDisplay();
-    }
-    
-    /**
-     * Retourne le nom de l'utilisateur
-     * @return 
-     */
-    public String getName(){
-        return this.name;
     }
     
     /**
@@ -58,6 +52,9 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
+    public boolean isUserConnected(){
+        return (this.name != null);
+    }
     /**
      * Permet d'ouvir le pop up de deconnexion 
      */
@@ -382,8 +379,8 @@ public class MainWindow extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 MainWindow mainwindow = new MainWindow();
-                if(mainwindow.getName() == null) mainwindow.setVisible(false);
-                if(mainwindow.getName() != null) mainwindow.setVisible(true);
+                if(mainwindow.isUserConnected() != true) mainwindow.setVisible(false);
+                if(mainwindow.isUserConnected() == true) mainwindow.setVisible(true);
             }
         });
     }

@@ -25,6 +25,7 @@ public class popUp extends javax.swing.JFrame {
     public void Connect(){
         LoginWindow loginwindow = new LoginWindow();
         loginwindow.setVisible(true);
+        dispose();
     }
 
     /** This method is called from within the constructor to
