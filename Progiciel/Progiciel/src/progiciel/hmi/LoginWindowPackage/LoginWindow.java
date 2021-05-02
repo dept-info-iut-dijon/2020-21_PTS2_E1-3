@@ -5,16 +5,10 @@
  */
 package progiciel.hmi.LoginWindowPackage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import progiciel.hmi.MainWindowPackage.ErrorLogin;
-import progiciel.hmi.MainWindowPackage.MainWindow;
-import progiciel.logic.User;
+import progiciel.database.UserDao;
+
 
 /**
  *
@@ -34,57 +28,25 @@ public class LoginWindow extends javax.swing.JFrame {
      * Permet à l'utilisateur de se connecter 
      */
     public void Connect(){
-        //Récupération des informations des champs de saisis
-        String username = usernameField.getText();
-        char[] password = passwordField.getPassword();
-        
-        //Variable de convertion en String du mot de passe saisi
-        String passString = "";
-        
-        //Variables des résultats de la requête
-        String resLogin = null;
-        String resPass = null;
-        int resId = 0;
-        
-        //Convertion en String du MDP
-        for(int i = 0; i != password.length; i++){
-            passString += password[i];
-        }
-        
         try {
-            //Connection to the DB
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
-            Statement ident = myConn.createStatement();
-            ResultSet myRs = ident.executeQuery("SELECT * FROM utilisateur WHERE login="+"'"+username+"'");
-
-            //Attributions des résultats de la requête 
-            while(myRs.next()){
-                resLogin = (myRs.getString("LOGIN"));
-                resPass = (myRs.getString("PASSWORD")); 
-                resId = Integer.parseInt(myRs.getString("ID"));
-                  
-            }
-            //Test du mdp 
-            if(resLogin != null){
-                if(resPass.equals(passString)){
-                    User connectedUser = new User(resId);
-                    MainWindow mainwindow = new MainWindow(connectedUser);
-                    mainwindow.setVisible(true);
-                    dispose();
-                }
-                else{
-                    ErrorLogin error = new ErrorLogin();
-                    error.setVisible(true);
-                }
-            }
-            else{
-                ErrorLogin error = new ErrorLogin();
-                error.setVisible(true);         
+            //Récupération des informations des champs de saisis
+            String username = usernameField.getText();
+            char[] password = passwordField.getPassword();
+            
+            //Variable de convertion en String du mot de passe saisi
+            String passString = "";
+            
+            //Convertion en String du MDP
+            for(int i = 0; i != password.length; i++){
+                passString += password[i];
             }
             
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            //Appel de la méthode read de UserDao qui permet de s'identifier
+            UserDao connect = new UserDao();
+            if(connect.read(username,passString) != null) dispose();
+            } catch (Exception ex) {
+                System.err.println("LoginWindow: "+ex.getMessage());
+            }
     }
     /**
      * This method is called from within the constructor to initialize the form.
