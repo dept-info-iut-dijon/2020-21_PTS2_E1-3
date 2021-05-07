@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import progiciel.hmi.MainWindowPackage.MainWindow;
 import progiciel.logic.User;
 import progiciel.logic.Utils;
 
@@ -29,14 +30,15 @@ public class ProfileWindow extends javax.swing.JFrame {
     public ProfileWindow(User user) {
         this.user = user;
         initComponents();
+        setLocationRelativeTo(null);
         setField();
-        
     }
 
     /**
      * Create new form ProfileWindow 
      */
     public ProfileWindow(){
+        setLocationRelativeTo(null);
         initComponents();
     }
     
@@ -209,6 +211,8 @@ public class ProfileWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
+        MainWindow mainwindow = new MainWindow(this.user);
+        mainwindow.setVisible(true);
         dispose();
     }//GEN-LAST:event_homeBtnActionPerformed
 

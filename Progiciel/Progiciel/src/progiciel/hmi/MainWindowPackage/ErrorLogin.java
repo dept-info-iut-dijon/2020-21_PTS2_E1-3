@@ -15,6 +15,7 @@ public class ErrorLogin extends javax.swing.JFrame {
      * Creates new form ErrorLogin
      */
     public ErrorLogin() {
+        setLocationRelativeTo(null);
         initComponents();
     }
 

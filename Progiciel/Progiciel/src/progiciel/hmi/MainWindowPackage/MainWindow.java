@@ -39,6 +39,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow(User user){
         initComponents();
         this.user = user;
+        this.welcomeLabel.setText("Welcome "+this.user.getLogin()+" !");
         setDisplay();
     }
     
@@ -48,8 +49,9 @@ public class MainWindow extends javax.swing.JFrame {
     public void setDisplay(){
         if(this.user == null){
             popUp popup = new popUp();
-            popup.setVisible(true);   
+            popup.setVisible(true); 
         }
+        setLocationRelativeTo(null);
     }
     
     public boolean isUserConnected(){
@@ -67,6 +69,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Permet d'éditer son profil
      */
     public void editProfile(){
+        dispose();
         ProfileWindow profilewindow = new ProfileWindow(this.user);
         profilewindow.setVisible(true);
     }
@@ -75,7 +78,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Permet de voir la liste des projets
      */
     public void projects(){
-        ProjectsWindow projectswindow = new ProjectsWindow();
+        dispose();
+        ProjectsWindow projectswindow = new ProjectsWindow(this.user);
         projectswindow.setVisible(true);
     }
     
@@ -83,7 +87,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Permet de voir la liste des techniciens 
      */
     public void viewTechs(){
-        TechsWindow techswindow = new TechsWindow();
+        dispose();
+        TechsWindow techswindow = new TechsWindow(this.user);
         techswindow.setVisible(true);
     }
     
@@ -209,7 +214,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         welcomeLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 48)); // NOI18N
         welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
-        welcomeLabel.setText("Welcome !");
+        welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        welcomeLabel.setText("Welcome placeholder !");
+        welcomeLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         tableLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 48)); // NOI18N
         tableLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -225,7 +232,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(logo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(welcomeLabel)
-                .addGap(208, 208, 208)
+                .addGap(61, 61, 61)
                 .addComponent(profilBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoutBtn)
@@ -253,7 +260,7 @@ public class MainWindow extends javax.swing.JFrame {
                                     .addComponent(logoutBtn)
                                     .addComponent(profilBtn)))))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
+                        .addGap(39, 39, 39)
                         .addComponent(welcomeLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(tableLabel)

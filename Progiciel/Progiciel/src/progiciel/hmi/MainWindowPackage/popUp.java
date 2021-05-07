@@ -17,6 +17,7 @@ public class popUp extends javax.swing.JFrame {
     /** Creates new form popUp */
     public popUp() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     /**

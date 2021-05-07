@@ -16,6 +16,7 @@ public class Disconnect extends javax.swing.JFrame {
      */
     public Disconnect() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

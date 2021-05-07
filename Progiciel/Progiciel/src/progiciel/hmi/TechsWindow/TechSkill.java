@@ -15,6 +15,7 @@ public class TechSkill extends javax.swing.JFrame {
      * Creates new form TechSkill
      */
     public TechSkill() {
+        setLocationRelativeTo(null);
         initComponents();
     }
 
