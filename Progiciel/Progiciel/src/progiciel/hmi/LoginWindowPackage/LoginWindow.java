@@ -8,6 +8,7 @@ package progiciel.hmi.LoginWindowPackage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import progiciel.database.UserDao;
+import progiciel.logic.Utils;
 
 
 /**
@@ -42,9 +43,13 @@ public class LoginWindow extends javax.swing.JFrame {
                 passString += password[i];
             }
             
+            //Hash du password 
+            String passHash = Utils.HashPassword(passString);
+            
+            System.out.println(passHash);
             //Appel de la méthode read de UserDao qui permet de s'identifier
             UserDao connect = new UserDao();
-            if(connect.read(username,passString) != null) dispose();
+            if(connect.read(username,passHash) != null) dispose();
             } catch (Exception ex) {
                 System.err.println("LoginWindow: "+ex.getMessage());
             }

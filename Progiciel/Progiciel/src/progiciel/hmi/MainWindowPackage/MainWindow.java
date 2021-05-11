@@ -61,8 +61,9 @@ public class MainWindow extends javax.swing.JFrame {
      * Permet d'ouvir le pop up de deconnexion 
      */
     public void Disconnect(){
-        Disconnect disconnect = new Disconnect();
+        Disconnect disconnect = new Disconnect(this.user);
         disconnect.setVisible(true);
+        dispose();
     }
     
     /**

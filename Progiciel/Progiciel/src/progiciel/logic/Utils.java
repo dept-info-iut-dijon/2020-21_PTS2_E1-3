@@ -33,7 +33,7 @@ public class Utils {
             // Add the result to the return String
             res+=intToHex;
         }
-        
+        res = res.toUpperCase();
         return res;
     }
     

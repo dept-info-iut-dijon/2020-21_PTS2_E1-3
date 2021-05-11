@@ -5,18 +5,32 @@
  */
 package progiciel.hmi.MainWindowPackage;
 
+import progiciel.logic.User;
+
 /**
  *
  * @author margu
  */
 public class Disconnect extends javax.swing.JFrame {
-
+        
+    User user;
+    
     /**
-     * Creates new form Disconnect
+     * Creates new form Disconnect, default constructor
      */
     public Disconnect() {
         initComponents();
         setLocationRelativeTo(null);
+    }
+    
+    /**
+     * Creates new form Disconnect
+     * @param user current connected user 
+     */
+    public Disconnect(User user){
+        initComponents();
+        setLocationRelativeTo(null);
+        this.user = user;
     }
 
     /**
@@ -32,7 +46,7 @@ public class Disconnect extends javax.swing.JFrame {
         disconnectLabel = new javax.swing.JLabel();
         disconnectBtn = new javax.swing.JButton();
         homeBtn = new javax.swing.JButton();
-        connectLabel = new javax.swing.JLabel();
+        closeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Log out");
@@ -68,40 +82,45 @@ public class Disconnect extends javax.swing.JFrame {
             }
         });
 
-        connectLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        connectLabel.setForeground(new java.awt.Color(255, 255, 255));
-        connectLabel.setText("This is going to close the software");
+        closeBtn.setBackground(new java.awt.Color(255, 0, 0));
+        closeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
+        closeBtn.setForeground(new java.awt.Color(255, 255, 255));
+        closeBtn.setText("Close ");
+        closeBtn.setBorderPainted(false);
+        closeBtn.setFocusPainted(false);
+        closeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(homeBtn)
-                        .addGap(47, 47, 47)
-                        .addComponent(disconnectBtn))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(connectLabel))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(disconnectLabel)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addComponent(homeBtn)
+                .addGap(18, 18, 18)
+                .addComponent(disconnectBtn)
+                .addGap(18, 18, 18)
+                .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(disconnectLabel)
+                .addGap(70, 70, 70))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(disconnectLabel)
-                .addGap(18, 18, 18)
-                .addComponent(connectLabel)
-                .addGap(18, 18, 18)
+                .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(disconnectBtn)
-                    .addComponent(homeBtn))
+                    .addComponent(homeBtn)
+                    .addComponent(closeBtn))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -120,12 +139,20 @@ public class Disconnect extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void disconnectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectBtnActionPerformed
-        System.exit(0); //Ferme le programme
+        popUp popup = new popUp();
+        popup.setVisible(true);
+        dispose();
     }//GEN-LAST:event_disconnectBtnActionPerformed
 
     private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
-        dispose();
+        MainWindow mainwindow = new MainWindow(this.user);
+        mainwindow.setVisible(true);
+        dispose(); 
     }//GEN-LAST:event_homeBtnActionPerformed
+
+    private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
+        System.exit(0); //Ferme le programme
+    }//GEN-LAST:event_closeBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,7 +190,7 @@ public class Disconnect extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel connectLabel;
+    private javax.swing.JButton closeBtn;
     private javax.swing.JButton disconnectBtn;
     private javax.swing.JLabel disconnectLabel;
     private javax.swing.JButton homeBtn;

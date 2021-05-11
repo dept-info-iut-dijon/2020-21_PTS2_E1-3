@@ -42,8 +42,7 @@ public class UserDao {
             while(myRs.next()){
                 resLogin = (myRs.getString("LOGIN"));
                 resPass = (myRs.getString("PASSWORD")); 
-                resId = Integer.parseInt(myRs.getString("ID"));
-                  
+                resId = Integer.parseInt(myRs.getString("ID"));    
             }
             //Test du mdp 
             if(resLogin != null){
