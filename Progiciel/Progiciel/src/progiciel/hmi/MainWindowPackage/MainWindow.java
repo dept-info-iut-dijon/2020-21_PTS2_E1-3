@@ -223,7 +223,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         projectTable.setBackground(new java.awt.Color(153, 153, 153));
-        projectTable.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        projectTable.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         projectTable.setForeground(new java.awt.Color(0, 0, 0));
         projectTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

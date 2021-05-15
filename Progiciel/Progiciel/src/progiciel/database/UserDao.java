@@ -18,6 +18,7 @@ import progiciel.hmi.MainWindowPackage.MainWindow;
 import progiciel.logic.Tech;
 import progiciel.logic.User;
 import progiciel.Exceptions.ExceptionHMI;
+import progiciel.hmi.ProfileWindow.ProfileWindow;
 
 /**
  * Gère l'accès des utilisateurs aux données 
@@ -81,8 +82,18 @@ public class UserDao {
      * Retourne la liste des techniciens 
      * @return 
      */
-    public Tech[] listTech(){
-        Tech[] rep = null;
-        return rep;
+    public ResultSet listTech(){
+        ResultSet myRs = null;
+        try {
+           //Connection to the DB
+           Connection myConn;
+           myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+           Statement ident = myConn.createStatement();
+           myRs = ident.executeQuery("SELECT * FROM TECHNICIEN");
+           
+            } catch (SQLException ex) {
+            Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return myRs;
     }
 }
