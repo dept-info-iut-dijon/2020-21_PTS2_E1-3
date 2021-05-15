@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import progiciel.hmi.MainWindowPackage.MainWindow;
@@ -40,6 +41,58 @@ public class ProfileWindow extends javax.swing.JFrame {
     public ProfileWindow(){
         setLocationRelativeTo(null);
         initComponents();
+    }
+     
+    /**
+     * Permet de valider le changement de mot de passe 
+     */
+    public void validateChange(){
+        char[] passwordArray;
+        String passString = "";
+        
+
+        if(this.comparePassword(this.passwordField.getPassword(), this.confirmationField.getPassword())){
+            passwordArray = this.passwordField.getPassword();
+            for(int i = 0; i != passwordArray.length; i++){
+                passString += passwordArray[i];
+            }
+            String passHash = Utils.HashPassword(passString);
+            
+            try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ident.executeUpdate("UPDATE utilisateur SET password ="+"'"+passHash+"'"+" WHERE ID="+this.user.getID());
+            ConfirmUpdate conf = new ConfirmUpdate();
+            conf.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else{
+            ErrorProfile errorProfile = new ErrorProfile();
+            errorProfile.setVisible(true);
+        }      
+    }
+    
+    /**
+     * Compare deux mot de passe 
+     * @param passwordArray
+     * @param confirmationArray
+     * @return 
+     */
+    public boolean comparePassword(char[] passwordArray, char[] confirmationArray){
+        String passString = "";
+        String confString = "";
+        
+        for(int i = 0; i != passwordArray.length; i++){
+            passString += passwordArray[i];
+        }
+        for(int i = 0; i != confirmationArray.length; i++){
+            confString += confirmationArray[i];
+        }
+        
+        return (passString.equals(confString));
     }
     
     /**
@@ -103,10 +156,10 @@ public class ProfileWindow extends javax.swing.JFrame {
             }
         });
 
-        homeBtn.setBackground(new java.awt.Color(237, 0, 0));
+        homeBtn.setBackground(new java.awt.Color(255, 102, 0));
         homeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
         homeBtn.setForeground(new java.awt.Color(255, 255, 255));
-        homeBtn.setText("Cancel");
+        homeBtn.setText("Home");
         homeBtn.setBorderPainted(false);
         homeBtn.setFocusPainted(false);
         homeBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -156,7 +209,7 @@ public class ProfileWindow extends javax.swing.JFrame {
                             .addComponent(loginField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(MainPanelLayout.createSequentialGroup()
-                                    .addComponent(homeBtn)
+                                    .addComponent(homeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(confirmBtn))
                                 .addComponent(confirmationField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -217,7 +270,7 @@ public class ProfileWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_homeBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-        System.exit(0); //Ferme le programme
+        this.validateChange();
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
