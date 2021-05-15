@@ -8,8 +8,12 @@ package progiciel.hmi.MainWindowPackage;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import progiciel.database.ProjectDao;
 import progiciel.hmi.ProfileWindow.ProfileWindow;
 import progiciel.hmi.ProjectsWindowPackage.ProjectsWindow;
 import progiciel.hmi.TechsWindow.TechsWindow;
@@ -41,6 +45,25 @@ public class MainWindow extends javax.swing.JFrame {
         this.user = user;
         this.welcomeLabel.setText("Welcome "+this.user.getLogin()+" !");
         setDisplay();
+        
+        ProjectDao projectLoader = new ProjectDao();
+        ResultSet loader = projectLoader.listAll();
+        
+        try {
+            while(loader.next()){
+                //Load data
+                String name = loader.getString("nom");
+                String status = loader.getString("statut");
+                
+                //Tableau pour remplir une ligne 
+                String arrayData[] = {name, status};
+                DefaultTableModel tableData = (DefaultTableModel)projectTable.getModel();
+                
+                tableData.addRow(arrayData);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectsWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -111,7 +134,7 @@ public class MainWindow extends javax.swing.JFrame {
         logoutBtn = new javax.swing.JButton();
         profilBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lastEditedProject = new javax.swing.JTable();
+        projectTable = new javax.swing.JTable();
         welcomeLabel = new javax.swing.JLabel();
         tableLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -199,19 +222,24 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        lastEditedProject.setBackground(new java.awt.Color(153, 153, 153));
-        lastEditedProject.setModel(new javax.swing.table.DefaultTableModel(
+        projectTable.setBackground(new java.awt.Color(153, 153, 153));
+        projectTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Project", "Summary"
+                "Name", "Status"
             }
-        ));
-        jScrollPane1.setViewportView(lastEditedProject);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(projectTable);
 
         welcomeLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 48)); // NOI18N
         welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -263,7 +291,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(welcomeLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(tableLabel)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -399,13 +427,13 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jakovaLabel;
-    private javax.swing.JTable lastEditedProject;
     private javax.swing.JLabel logo;
     private javax.swing.JButton logoutBtn;
     private javax.swing.JPanel lowerPanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton profilBtn;
     private javax.swing.JLabel progicielLabel;
+    private javax.swing.JTable projectTable;
     private javax.swing.JMenuItem projectsBtn;
     private javax.swing.JButton supportBtn;
     private javax.swing.JLabel tableLabel;

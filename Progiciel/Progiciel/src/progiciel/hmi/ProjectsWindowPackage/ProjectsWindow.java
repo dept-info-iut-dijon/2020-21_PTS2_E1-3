@@ -8,8 +8,12 @@ package progiciel.hmi.ProjectsWindowPackage;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import progiciel.database.ProjectDao;
 import progiciel.hmi.MainWindowPackage.MainWindow;
 import progiciel.logic.User;
 
@@ -36,6 +40,27 @@ public class ProjectsWindow extends javax.swing.JFrame {
         this.user = user; 
         initComponents();
         setLocationRelativeTo(null);
+        
+        ProjectDao projectLoader = new ProjectDao();
+        ResultSet loader = projectLoader.listAll();
+        
+        try {
+            while(loader.next()){
+                //Load data
+                String name = loader.getString("nom");
+                String estimated = String.valueOf(loader.getInt("dureeEstimee"));
+                String finale = String.valueOf(loader.getInt("dureeFinale"));
+                String status = loader.getString("statut");
+                
+                //Tableau pour remplir une ligne 
+                String arrayData[] = {name,estimated,finale,status};
+                DefaultTableModel tableData = (DefaultTableModel)projectTable.getModel();
+                
+                tableData.addRow(arrayData);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectsWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -75,16 +100,29 @@ public class ProjectsWindow extends javax.swing.JFrame {
         projectTable.setBackground(new java.awt.Color(153, 153, 153));
         projectTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Project", "Summary"
+                "Name", "Estimated time", "Duration", "Status"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        projectTable.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(projectTable);
+        projectTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (projectTable.getColumnModel().getColumnCount() > 0) {
+            projectTable.getColumnModel().getColumn(0).setResizable(false);
+            projectTable.getColumnModel().getColumn(1).setResizable(false);
+            projectTable.getColumnModel().getColumn(2).setResizable(false);
+            projectTable.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jButton1.setBackground(new java.awt.Color(255, 51, 51));
         jButton1.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
@@ -208,7 +246,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                 .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
