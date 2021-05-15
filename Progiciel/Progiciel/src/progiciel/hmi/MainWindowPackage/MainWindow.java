@@ -223,6 +223,8 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         projectTable.setBackground(new java.awt.Color(153, 153, 153));
+        projectTable.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        projectTable.setForeground(new java.awt.Color(0, 0, 0));
         projectTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -291,7 +293,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(welcomeLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(tableLabel)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

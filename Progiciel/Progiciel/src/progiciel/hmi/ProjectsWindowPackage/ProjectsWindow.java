@@ -98,9 +98,11 @@ public class ProjectsWindow extends javax.swing.JFrame {
         titleLabel.setText("Projects :");
 
         projectTable.setBackground(new java.awt.Color(153, 153, 153));
+        projectTable.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        projectTable.setForeground(new java.awt.Color(255, 255, 255));
         projectTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Name", "Estimated time", "Duration", "Status"
@@ -246,7 +248,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
