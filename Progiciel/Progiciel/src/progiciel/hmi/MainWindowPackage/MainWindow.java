@@ -236,12 +236,23 @@ public class MainWindow extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jScrollPane1.setViewportView(projectTable);
+        if (projectTable.getColumnModel().getColumnCount() > 0) {
+            projectTable.getColumnModel().getColumn(0).setResizable(false);
+            projectTable.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         welcomeLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 48)); // NOI18N
         welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -293,7 +304,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(welcomeLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(tableLabel)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

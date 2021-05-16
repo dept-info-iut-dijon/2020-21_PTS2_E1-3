@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import progiciel.hmi.ProfileWindow.ProfileWindow;
+import progiciel.hmi.ProjectsWindowPackage.ProjectsWindow;
 import progiciel.hmi.ProjectsWindowPackage.UpdateConfirmation;
 import progiciel.logic.Project;
 
@@ -47,26 +49,45 @@ public class ProjectDao {
      * @param p 
      */
     public void update(Project p){
-        
+        ProjectDao projectLoader = new ProjectDao();
+        ResultSet loader = projectLoader.listAll();
+
+   
         try {
+                String name = null;
+                int estTime = 0;
+                int finale = 0;
+                String statut = null;
+                
                 //Connection to the DB
                 Connection myConn;
                 myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
                 Statement ident = myConn.createStatement();
+                Statement check = myConn.createStatement();
+                
+                ResultSet checker = check.executeQuery("SELECT * FROM projet WHERE ID="+p.getID());
+                
+                while(checker.next()){
+                    name = checker.getString("nom");
+                    estTime = checker.getInt("dureeEstimee");
+                    finale = checker.getInt("dureeFinale");
+                    statut = checker.getString("statut");
+                }
+                
                 //Mise à jour du nom 
-                if(p.getName() != null){
+                if(p.getName() != null && !p.getName().equals(name)){
                     ident.executeUpdate("UPDATE projet SET nom ="+"'"+p.getName()+"'"+" WHERE ID="+p.getID());
                 }
                 //Mise à jour de dureeEstimee
-                if(p.getEstimatedDurationMinutes() != 0){
-                    ident.executeUpdate("UPDATE projet SET dureeEstimee ="+"'"+p.getEstimatedDurationMinutes()+"'"+" WHERE ID="+p.getID());
+                if(p.getEstimatedDurationMinutes() > -1 && p.getEstimatedDurationMinutes() != estTime){
+                    ident.executeUpdate("UPDATE projet SET dureeEstimee ="+p.getEstimatedDurationMinutes()+" WHERE ID="+p.getID());
                 }
                 //Mise à jour de dureeFianle
-                if(p.getFinalDuration() != 0){
-                    ident.executeUpdate("UPDATE projet SET dureeFinale ="+"'"+p.getFinalDuration()+"'"+" WHERE ID="+p.getID());
+                if(p.getFinalDuration() > -1 && p.getFinalDuration() != finale){
+                    ident.executeUpdate("UPDATE projet SET dureeFinale ="+p.getFinalDuration()+" WHERE ID="+p.getID());
                 }
                 //Mise à jour du status 
-                if(p.getStatus() != null){
+                if(p.getStatus() != null && !p.getStatus().equals(statut)){
                     ident.executeUpdate("UPDATE projet SET statut ="+"'"+p.getStatus()+"'"+" WHERE ID="+p.getID());
                 }
                 
