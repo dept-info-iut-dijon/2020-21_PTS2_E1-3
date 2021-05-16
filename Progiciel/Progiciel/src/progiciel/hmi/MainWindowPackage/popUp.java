@@ -93,7 +93,7 @@ public class popUp extends javax.swing.JFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(319, 319, 319)
                         .addComponent(loginBtn)))
-                .addGap(0, 260, Short.MAX_VALUE))
+                .addGap(0, 236, Short.MAX_VALUE))
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
@@ -120,7 +120,7 @@ public class popUp extends javax.swing.JFrame {
                         .addComponent(plsLogInLabel)
                         .addGap(18, 18, 18)))
                 .addComponent(loginBtn)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

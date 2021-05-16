@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import progiciel.database.ProjectDao;
 import progiciel.hmi.MainWindowPackage.MainWindow;
+import progiciel.logic.Project;
 import progiciel.logic.User;
 
 /**
@@ -47,13 +48,14 @@ public class ProjectsWindow extends javax.swing.JFrame {
         try {
             while(loader.next()){
                 //Load data
+                String ID = loader.getString("ID");
                 String name = loader.getString("nom");
                 String estimated = String.valueOf(loader.getInt("dureeEstimee"));
                 String finale = String.valueOf(loader.getInt("dureeFinale"));
                 String status = loader.getString("statut");
                 
                 //Tableau pour remplir une ligne 
-                String arrayData[] = {name,estimated,finale,status};
+                String arrayData[] = {ID,name,estimated,finale,status};
                 DefaultTableModel tableData = (DefaultTableModel)projectTable.getModel();
                 
                 tableData.addRow(arrayData);
@@ -61,6 +63,30 @@ public class ProjectsWindow extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ProjectsWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void modify(){
+        DefaultTableModel tableData = (DefaultTableModel)this.projectTable.getModel();
+        
+        //Récupération des données 
+        String IDString = tableData.getValueAt(this.projectTable.getSelectedRow(), 0).toString();
+        String name = tableData.getValueAt(this.projectTable.getSelectedRow(), 1).toString();
+        String estimatedTimeString = tableData.getValueAt(this.projectTable.getSelectedRow(), 2).toString();
+        String durationString = tableData.getValueAt(this.projectTable.getSelectedRow(), 3).toString();
+        String status = tableData.getValueAt(this.projectTable.getSelectedRow(), 4).toString();
+        
+        //Conversion
+        int ID = Integer.parseInt(IDString);
+        int estimatedMinutes = Integer.parseInt(estimatedTimeString);
+        int finaleDuration = Integer.parseInt(durationString);
+        
+        //Création d'un object projet
+        Project projectToUpdate = new Project(name, finaleDuration, status, ID, estimatedMinutes);
+        
+        //Utilisation de ProjectDao
+        ProjectDao update = new ProjectDao();
+        update.update(projectToUpdate);
+        
     }
 
     /**
@@ -104,18 +130,30 @@ public class ProjectsWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Estimated time", "Duration", "Status"
+                "ID", "Name", "Estimated time", "Duration", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         projectTable.setColumnSelectionAllowed(true);
+        projectTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                projectTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(projectTable);
         projectTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (projectTable.getColumnModel().getColumnCount() > 0) {
@@ -123,6 +161,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
             projectTable.getColumnModel().getColumn(1).setResizable(false);
             projectTable.getColumnModel().getColumn(2).setResizable(false);
             projectTable.getColumnModel().getColumn(3).setResizable(false);
+            projectTable.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jButton1.setBackground(new java.awt.Color(255, 51, 51));
@@ -136,7 +175,12 @@ public class ProjectsWindow extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 204, 0));
         jButton2.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
-        jButton2.setText("Modify");
+        jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         lowerPanel.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -289,6 +333,14 @@ public class ProjectsWindow extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void projectTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projectTableMouseClicked
+        
+    }//GEN-LAST:event_projectTableMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.modify();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
