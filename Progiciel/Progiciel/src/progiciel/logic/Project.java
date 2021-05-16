@@ -5,6 +5,15 @@
  */
 package progiciel.logic;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import progiciel.hmi.ProfileWindow.ConfirmUpdate;
+import progiciel.hmi.ProfileWindow.ProfileWindow;
+
 /**
  * Classe d'un projet
  * @author margu
@@ -46,8 +55,19 @@ public class Project {
     /**
      * Permet d'annuler un projet 
      */
-    public void Cancel(){
-        
+    public boolean Cancel(){
+        boolean res = false;
+        try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ident.executeUpdate("UPDATE projet SET statut = 'Close' WHERE id="+this.ID);
+            res = true;
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        return res;
     }
 
     public String getName() {

@@ -65,6 +65,9 @@ public class ProjectsWindow extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Modification d'un projet 
+     */
     public void modify(){
         DefaultTableModel tableData = (DefaultTableModel)this.projectTable.getModel();
         
@@ -87,6 +90,35 @@ public class ProjectsWindow extends javax.swing.JFrame {
         ProjectDao update = new ProjectDao();
         update.update(projectToUpdate);
         
+    }
+    
+    /**
+     * Suppresion d'un projet 
+     */
+    public void close(){
+        DefaultTableModel tableData = (DefaultTableModel)this.projectTable.getModel();
+        
+        //Récupération des données 
+        String IDString = tableData.getValueAt(this.projectTable.getSelectedRow(), 0).toString();
+        String name = tableData.getValueAt(this.projectTable.getSelectedRow(), 1).toString();
+        String estimatedTimeString = tableData.getValueAt(this.projectTable.getSelectedRow(), 2).toString();
+        String durationString = tableData.getValueAt(this.projectTable.getSelectedRow(), 3).toString();
+        String status = tableData.getValueAt(this.projectTable.getSelectedRow(), 4).toString();
+        
+        //Conversion
+        int ID = Integer.parseInt(IDString);
+        int estimatedMinutes = Integer.parseInt(estimatedTimeString);
+        int finaleDuration = Integer.parseInt(durationString);
+        
+        //Création d'un object projet
+        Project projectToUpdate = new Project(name, finaleDuration, status, ID, estimatedMinutes);
+        
+        boolean res = projectToUpdate.Cancel();
+        if(res = true){
+            DeleteConfirm delete = new DeleteConfirm(this.user);
+            delete.setVisible(true);
+            dispose();
+        }
     }
 
     /**
@@ -311,7 +343,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        this.close();        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void supportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supportBtnActionPerformed

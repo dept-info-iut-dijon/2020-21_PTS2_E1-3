@@ -12,9 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
 import progiciel.hmi.ProfileWindow.ProfileWindow;
-import progiciel.hmi.ProjectsWindowPackage.ProjectsWindow;
 import progiciel.hmi.ProjectsWindowPackage.UpdateConfirmation;
 import progiciel.logic.Project;
 
