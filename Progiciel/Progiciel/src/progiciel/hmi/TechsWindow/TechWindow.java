@@ -15,9 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import progiciel.Exceptions.ExceptionHMI;
-import progiciel.hmi.MainWindowPackage.ErrorLogin;
-import progiciel.hmi.MainWindowPackage.MainWindow;
+import progiciel.logic.Tech;
 import progiciel.logic.User;
 
 /**
@@ -39,9 +37,9 @@ public class TechWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form TechSkill
+     * @param user
      */
-    public TechWindow(User user, int IDTechs) {
-        setLocationRelativeTo(null);
+    public TechWindow(User user, Tech tech) {
         initComponents();
         setLocationRelativeTo(null);
         this.user = user;
@@ -50,11 +48,12 @@ public class TechWindow extends javax.swing.JFrame {
             //Connection to the DB
             Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
             Statement ident = myConn.createStatement();
-            ResultSet myRs = ident.executeQuery("SELECT * FROM Technicien WHERE ID="+IDTechs);
+            ResultSet myRs = ident.executeQuery("SELECT * FROM Technicien WHERE ID="+tech.getID());
             
             while(myRs.next()){
                 this.lastName.setText(myRs.getString("prenom")+" "+myRs.getString("nom"));
             }
+            
             } catch (SQLException ex) {
             Logger.getLogger(TechWindow.class.getName()).log(Level.SEVERE, null, ex);
             }

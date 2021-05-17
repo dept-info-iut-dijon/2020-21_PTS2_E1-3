@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import progiciel.database.UserDao;
 import progiciel.hmi.MainWindowPackage.MainWindow;
+import progiciel.logic.Tech;
 import progiciel.logic.User;
 
 /**
@@ -74,8 +75,10 @@ public class TechsWindow extends javax.swing.JFrame {
         //Récupération ID technicien
         int IDtech = Integer.parseInt(tableData.getValueAt(this.techsTable.getSelectedRow(),0).toString());
         
+        //Création d'un techos
+        Tech techTosee = new Tech(IDtech);
         //Appel de TechWindow
-        TechWindow techWindow = new TechWindow(this.user, IDtech);
+        TechWindow techWindow = new TechWindow(this.user, techTosee);
         techWindow.setVisible(true);
         dispose();
  
