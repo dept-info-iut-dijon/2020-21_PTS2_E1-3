@@ -62,7 +62,7 @@ public class Project {
             Connection myConn;
             myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
             Statement ident = myConn.createStatement();
-            ident.executeUpdate("UPDATE projet SET statut = 'Close' WHERE id="+this.ID);
+            ident.executeUpdate("UPDATE projet SET statut ="+"'"+ProjectStatus.CANCELED+"'"+" WHERE id="+this.ID);
             res = true;
             } catch (SQLException ex) {
                 Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
