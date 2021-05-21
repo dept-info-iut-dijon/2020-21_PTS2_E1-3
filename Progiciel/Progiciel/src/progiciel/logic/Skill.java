@@ -6,20 +6,21 @@
 package progiciel.logic;
 
 /**
- *
+ * Permet de gérer un skill de technicien
  * @author bkott
  */
 public class Skill {
+
     private String name;
     private String level;
 
-    public Skill(String name, String level) {
+    /**
+     * Permet de créer un skill
+     * @param tech 
+     */
+    public Skill(String name, String level){
         this.name = name;
         this.level = level;
-    }
-    
-    public Skill(){
-        
     }
     
     public String getName() {

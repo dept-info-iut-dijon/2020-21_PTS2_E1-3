@@ -13,8 +13,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import progiciel.logic.Skill;
 import progiciel.logic.Tech;
 import progiciel.logic.User;
 
@@ -53,7 +55,7 @@ public class TechWindow extends javax.swing.JFrame {
             while(myRs.next()){
                 this.lastName.setText(myRs.getString("prenom")+" "+myRs.getString("nom"));
             }
-            
+            ArrayList<Skill> skill = tech.getSkill();
             } catch (SQLException ex) {
             Logger.getLogger(TechWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
