@@ -50,35 +50,83 @@ public class ProfileWindow extends javax.swing.JFrame {
         char[] passwordArray;
         String passString = "";
         
-
-        if(this.comparePassword(this.passwordField.getPassword(), this.confirmationField.getPassword())){
-            passwordArray = this.passwordField.getPassword();
-            for(int i = 0; i != passwordArray.length; i++){
-                passString += passwordArray[i];
-            }
-            String passHash = Utils.HashPassword(passString);
-            
-            if(Utils.IsPasswordSafe(passString)){
-                try {
-                //Connection to the DB
-                Connection myConn;
-                myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
-                Statement ident = myConn.createStatement();
-                ident.executeUpdate("UPDATE utilisateur SET password ="+"'"+passHash+"'"+" WHERE ID="+this.user.getID());
-                ConfirmUpdate conf = new ConfirmUpdate();
-                conf.setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+        //Modification mot de passe 
+        if(this.passwordField.equals(null)){
+            if(this.comparePassword(this.passwordField.getPassword(), this.confirmationField.getPassword())){
+                passwordArray = this.passwordField.getPassword();
+                for(int i = 0; i != passwordArray.length; i++){
+                    passString += passwordArray[i];
                 }
-            } else{
-                UnsafePass error = new UnsafePass();
-                error.setVisible(true);
-            }
+                String passHash = Utils.HashPassword(passString);
+
+                if(Utils.IsPasswordSafe(passString)){
+                    try {
+                    //Connection to the DB
+                    Connection myConn;
+                    myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+                    Statement ident = myConn.createStatement();
+                    ident.executeUpdate("UPDATE utilisateur SET password ="+"'"+passHash+"'"+" WHERE ID="+this.user.getID());
+                    ConfirmUpdate conf = new ConfirmUpdate();
+                    conf.setVisible(true);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else{
+                    UnsafePass error = new UnsafePass();
+                    error.setVisible(true);
+                }
             
-        } else{
-            ErrorProfile errorProfile = new ErrorProfile();
-            errorProfile.setVisible(true);
-        }      
+            } else{
+                ErrorProfile errorProfile = new ErrorProfile();
+                errorProfile.setVisible(true);
+            }
+        }
+        
+        if(!this.loginField.getText().equals(this.user.getLogin()) && this.loginField != null){
+            this.changeLogin();
+        }
+    }
+    
+    /**
+     * Permet de changer de Login
+     */
+    public void changeLogin(){
+        boolean loginExist = false;
+        String newLogin = this.loginField.getText();
+        
+        try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ResultSet myRs = ident.executeQuery("SELECT Login FROM Utilisateur");
+            
+            //Check si le login existe déjà 
+            while(myRs.next()){
+                if(newLogin.equals(myRs.getString("Login"))){
+                    loginExist = true;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(!loginExist){
+            try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ident.executeUpdate("UPDATE Utilisateur SET LOGIN ="+"'"+newLogin+"'"+" WHERE ID="+this.user.getID());
+            ConfirmUpdate conf = new ConfirmUpdate();
+            conf.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            LoginExist exist = new LoginExist();
+            exist.setVisible(true);
+        }   
     }
     
     /**
@@ -199,6 +247,7 @@ public class ProfileWindow extends javax.swing.JFrame {
         password1.setText("Password confirmation:");
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("At least 8 characters, one capital and one digit");
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
