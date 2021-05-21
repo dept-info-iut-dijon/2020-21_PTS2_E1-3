@@ -58,17 +58,23 @@ public class ProfileWindow extends javax.swing.JFrame {
             }
             String passHash = Utils.HashPassword(passString);
             
-            try {
-            //Connection to the DB
-            Connection myConn;
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
-            Statement ident = myConn.createStatement();
-            ident.executeUpdate("UPDATE utilisateur SET password ="+"'"+passHash+"'"+" WHERE ID="+this.user.getID());
-            ConfirmUpdate conf = new ConfirmUpdate();
-            conf.setVisible(true);
-            } catch (SQLException ex) {
-                Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+            if(Utils.IsPasswordSafe(passString)){
+                try {
+                //Connection to the DB
+                Connection myConn;
+                myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+                Statement ident = myConn.createStatement();
+                ident.executeUpdate("UPDATE utilisateur SET password ="+"'"+passHash+"'"+" WHERE ID="+this.user.getID());
+                ConfirmUpdate conf = new ConfirmUpdate();
+                conf.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else{
+                UnsafePass error = new UnsafePass();
+                error.setVisible(true);
             }
+            
         } else{
             ErrorProfile errorProfile = new ErrorProfile();
             errorProfile.setVisible(true);
@@ -122,6 +128,7 @@ public class ProfileWindow extends javax.swing.JFrame {
         confirmBtn = new javax.swing.JButton();
         confirmationField = new javax.swing.JPasswordField();
         password1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Your profile");
@@ -191,6 +198,9 @@ public class ProfileWindow extends javax.swing.JFrame {
         password1.setForeground(new java.awt.Color(255, 255, 255));
         password1.setText("Password confirmation:");
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("At least 8 characters, one capital and one digit");
+
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
@@ -200,24 +210,30 @@ public class ProfileWindow extends javax.swing.JFrame {
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(login, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(password, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(password1, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(18, 18, 18)
-                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(loginField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(MainPanelLayout.createSequentialGroup()
-                                    .addComponent(homeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(confirmBtn))
-                                .addComponent(confirmationField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(MainPanelLayout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(login, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(password1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(password, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 25, Short.MAX_VALUE)
+                                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(loginField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(MainPanelLayout.createSequentialGroup()
+                                            .addComponent(homeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(confirmBtn))
+                                        .addComponent(confirmationField, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(MainPanelLayout.createSequentialGroup()
+                                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(222, 222, 222)
+                                .addComponent(title)))
+                        .addContainerGap(21, Short.MAX_VALUE))
                     .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(222, 222, 222)
-                        .addComponent(title)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,11 +254,13 @@ public class ProfileWindow extends javax.swing.JFrame {
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(password)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(password1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(homeBtn)
                     .addComponent(confirmBtn))
@@ -321,6 +339,7 @@ public class ProfileWindow extends javax.swing.JFrame {
     private javax.swing.JButton confirmBtn;
     private javax.swing.JPasswordField confirmationField;
     private javax.swing.JButton homeBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel login;
     private javax.swing.JTextField loginField;
     private javax.swing.JLabel logo;
