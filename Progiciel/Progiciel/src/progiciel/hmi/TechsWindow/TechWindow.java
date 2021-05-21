@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import progiciel.logic.Skill;
 import progiciel.logic.Tech;
 import progiciel.logic.User;
@@ -55,11 +56,24 @@ public class TechWindow extends javax.swing.JFrame {
             while(myRs.next()){
                 this.lastName.setText(myRs.getString("prenom")+" "+myRs.getString("nom"));
             }
-            ArrayList<Skill> skill = tech.getSkill();
             } catch (SQLException ex) {
             Logger.getLogger(TechWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
+        
+        //Remplissage du tableau des skills
+        ArrayList<Skill> skill = tech.getSkill();
+        for(int i = 0; i < skill.size(); i++){
+            //Load data
+            String name = skill.get(i).getName();
+            String level = skill.get(i).getLevel();
+            
+            //Tableau pour remplir une ligne
+            String arrayData[]= {name, level};
+            DefaultTableModel tableData = (DefaultTableModel)this.skillTable.getModel();
+            
+            tableData.addRow(arrayData);
         }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,7 +89,7 @@ public class TechWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lastName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        skillTable = new javax.swing.JTable();
         lowerPanel = new javax.swing.JPanel();
         progicielLabel = new javax.swing.JLabel();
         jakovaLabel = new javax.swing.JLabel();
@@ -100,21 +114,18 @@ public class TechWindow extends javax.swing.JFrame {
         lastName.setForeground(new java.awt.Color(255, 255, 255));
         lastName.setText("PlaceHolder");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        skillTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Skills", "Level"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jScrollPane1.setViewportView(skillTable);
+        if (skillTable.getColumnModel().getColumnCount() > 0) {
+            skillTable.getColumnModel().getColumn(0).setResizable(false);
+            skillTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
         lowerPanel.setBackground(new java.awt.Color(153, 153, 153));
@@ -322,12 +333,12 @@ public class TechWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jakovaLabel;
     private javax.swing.JLabel lastName;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel lowerPanel;
     private javax.swing.JLabel progicielLabel;
+    private javax.swing.JTable skillTable;
     private javax.swing.JButton supportBtn;
     // End of variables declaration//GEN-END:variables
 }
