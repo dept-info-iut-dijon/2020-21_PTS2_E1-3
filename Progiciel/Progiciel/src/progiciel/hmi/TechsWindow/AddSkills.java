@@ -100,7 +100,7 @@ public class AddSkills extends javax.swing.JFrame {
                 //Connection to the DB
                 Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
                 Statement ident = myConn.createStatement();
-                ident.executeUpdate("UPDATE possede SET niveau ='"+level+"' WHERE competenceID="+IDskill);
+                ident.executeUpdate("UPDATE possede SET niveau ='"+level+"' WHERE competenceID="+IDskill+" AND technicienID="+this.tech.getID());
                 Logger.getLogger(AddSkills.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex1) {
                 Logger.getLogger(AddSkills.class.getName()).log(Level.SEVERE, null, ex1);
@@ -118,6 +118,10 @@ public class AddSkills extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        lowerPanel = new javax.swing.JPanel();
+        progicielLabel = new javax.swing.JLabel();
+        jakovaLabel = new javax.swing.JLabel();
+        supportBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         techName = new javax.swing.JLabel();
@@ -128,15 +132,57 @@ public class AddSkills extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
-        lowerPanel = new javax.swing.JPanel();
-        progicielLabel = new javax.swing.JLabel();
-        jakovaLabel = new javax.swing.JLabel();
-        supportBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(747, 373));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(46, 48, 47));
+
+        lowerPanel.setBackground(new java.awt.Color(153, 153, 153));
+
+        progicielLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
+        progicielLabel.setForeground(new java.awt.Color(0, 0, 0));
+        progicielLabel.setText("Progiciel V0.1 for MSP gmBH.");
+
+        jakovaLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
+        jakovaLabel.setForeground(new java.awt.Color(0, 0, 0));
+        jakovaLabel.setText("© 2021 Jakova.All rigths reserved");
+
+        supportBtn.setBackground(new java.awt.Color(153, 153, 153));
+        supportBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
+        supportBtn.setForeground(new java.awt.Color(0, 0, 0));
+        supportBtn.setText("Support");
+        supportBtn.setBorderPainted(false);
+        supportBtn.setFocusPainted(false);
+        supportBtn.setOpaque(false);
+        supportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supportBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout lowerPanelLayout = new javax.swing.GroupLayout(lowerPanel);
+        lowerPanel.setLayout(lowerPanelLayout);
+        lowerPanelLayout.setHorizontalGroup(
+            lowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lowerPanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(supportBtn)
+                .addGap(28, 28, 28)
+                .addComponent(progicielLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jakovaLabel)
+                .addGap(63, 63, 63))
+        );
+        lowerPanelLayout.setVerticalGroup(
+            lowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lowerPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(lowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(supportBtn)
+                    .addComponent(progicielLabel)
+                    .addComponent(jakovaLabel)))
+        );
 
         jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -208,76 +254,33 @@ public class AddSkills extends javax.swing.JFrame {
             }
         });
 
-        lowerPanel.setBackground(new java.awt.Color(153, 153, 153));
-
-        progicielLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        progicielLabel.setForeground(new java.awt.Color(0, 0, 0));
-        progicielLabel.setText("Progiciel V0.1 for MSP gmBH.");
-
-        jakovaLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        jakovaLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jakovaLabel.setText("© 2021 Jakova.All rigths reserved");
-
-        supportBtn.setBackground(new java.awt.Color(153, 153, 153));
-        supportBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        supportBtn.setForeground(new java.awt.Color(0, 0, 0));
-        supportBtn.setText("Support");
-        supportBtn.setBorderPainted(false);
-        supportBtn.setFocusPainted(false);
-        supportBtn.setOpaque(false);
-        supportBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supportBtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout lowerPanelLayout = new javax.swing.GroupLayout(lowerPanel);
-        lowerPanel.setLayout(lowerPanelLayout);
-        lowerPanelLayout.setHorizontalGroup(
-            lowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lowerPanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(supportBtn)
-                .addGap(28, 28, 28)
-                .addComponent(progicielLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jakovaLabel)
-                .addGap(63, 63, 63))
-        );
-        lowerPanelLayout.setVerticalGroup(
-            lowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lowerPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(lowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(supportBtn)
-                    .addComponent(progicielLabel)
-                    .addComponent(jakovaLabel)))
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(logo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(logo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(techName)))
-                .addGap(77, 77, 77)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(addBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cancelBtn))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addContainerGap(33, Short.MAX_VALUE))
-            .addComponent(lowerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(techName)))
+                        .addGap(77, 77, 77)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(addBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cancelBtn))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(0, 191, Short.MAX_VALUE))
+                    .addComponent(lowerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,19 +305,24 @@ public class AddSkills extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addBtn)
                     .addComponent(cancelBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();

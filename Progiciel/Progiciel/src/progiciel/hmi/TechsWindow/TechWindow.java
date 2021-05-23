@@ -122,7 +122,15 @@ public class TechWindow extends javax.swing.JFrame {
             new String [] {
                 "Skills", "Level"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(skillTable);
         if (skillTable.getColumnModel().getColumnCount() > 0) {
             skillTable.getColumnModel().getColumn(0).setResizable(false);
