@@ -13,70 +13,101 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import progiciel.logic.Skill;
 import progiciel.logic.Tech;
 import progiciel.logic.User;
 
 /**
- *
- * @author bkott
+ * Permet d'ajouter une compétence à un tech
+ * @author margu
  */
-public class TechWindow extends javax.swing.JFrame {
+public class AddSkills extends javax.swing.JFrame {
     
     User user;
     Tech tech;
 
     /**
-     * Creates new form TechSkill
+     * Creates new form AddSkills
      */
-    public TechWindow() {
-        setLocationRelativeTo(null);
+    public AddSkills() {
         initComponents();
-        setLocationRelativeTo(null);
     }
-
+    
     /**
-     * Creates new form TechSkill
+     * Creates new form AddSkills
      * @param user
+     * @param tech
      */
-    public TechWindow(User user, Tech tech) {
+    public AddSkills(User user, Tech tech) {
         initComponents();
         setLocationRelativeTo(null);
         this.user = user;
         this.tech = tech;
+        //Set le nom du tech sur l'IHM
+        this.techName.setText(tech.getFirstName()+" "+tech.getLastName());
+        
+        
+        //Load skills
+        try {
+            //Connection to the DB
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            
+            ResultSet loadTech = ident.executeQuery("SELECT * FROM Technicien WHERE ID="+tech.getID());
+            
+            while(loadTech.next()){
+                this.techName.setText(loadTech.getString("prenom")+" "+loadTech.getString("nom"));
+            }
+            
+            ResultSet myRs = ident.executeQuery("SELECT * FROM Competence");
+            while(myRs.next()){
+                //Récupération du nom des skills
+                String name = myRs.getString("Nom");
+                String ID = myRs.getString("ID");
+                //Tableau pour remplir le JTable
+                String arraySkills[] = {ID, name};
+                DefaultTableModel tableData = (DefaultTableModel)this.skillsTable.getModel();
+
+                tableData.addRow(arraySkills);
+            }
+            
+            
+            } catch (SQLException ex) {
+            Logger.getLogger(TechWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    /**
+     * Permet de confirmer l'ajout d'un skill
+     */
+    public void ConfirmAddSkills(){
+        DefaultTableModel tableData = (DefaultTableModel)skillsTable.getModel();
+        int IDskill = Integer.parseInt(tableData.getValueAt(this.skillsTable.getSelectedRow(), 0).toString());
+        String level = this.levelList.getSelectedValue().toString();
         
         try {
             //Connection to the DB
             Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
             Statement ident = myConn.createStatement();
-            ResultSet myRs = ident.executeQuery("SELECT * FROM Technicien WHERE ID="+tech.getID());
             
-            while(myRs.next()){
-                this.lastName.setText(myRs.getString("prenom")+" "+myRs.getString("nom"));
+            ident.executeUpdate("INSERT INTO possede VALUES"
+                    + "("+IDskill+","+this.tech.getID()+",'"+level+"')");
+            
+        } catch (SQLException ex) {
+            try {
+                //Connection to the DB
+                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+                Statement ident = myConn.createStatement();
+                ident.executeUpdate("UPDATE possede SET niveau ='"+level+"' WHERE competenceID="+IDskill);
+                Logger.getLogger(AddSkills.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(AddSkills.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            } catch (SQLException ex) {
-            Logger.getLogger(TechWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-        //Remplissage du tableau des skills
-        ArrayList<Skill> skill = tech.getSkill();
-        for(int i = 0; i < skill.size(); i++){
-            //Load data
-            String name = skill.get(i).getName();
-            String level = skill.get(i).getLevel();
-            
-            //Tableau pour remplir une ligne
-            String arrayData[]= {name, level};
-            DefaultTableModel tableData = (DefaultTableModel)this.skillTable.getModel();
-            
-            tableData.addRow(arrayData);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,70 +118,93 @@ public class TechWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        logo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        lastName = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
+        techName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        skillTable = new javax.swing.JTable();
-        homeBtn = new javax.swing.JButton();
-        delBtn = new javax.swing.JButton();
+        skillsTable = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        levelList = new javax.swing.JList<>();
+        jLabel3 = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
         lowerPanel = new javax.swing.JPanel();
         progicielLabel = new javax.swing.JLabel();
         jakovaLabel = new javax.swing.JLabel();
         supportBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(747, 373));
 
         jPanel1.setBackground(new java.awt.Color(46, 48, 47));
 
+        jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Add a new skill to :");
+
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/progiciel/hmi/images/logo.png"))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Technicien:");
+        techName.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
+        techName.setForeground(new java.awt.Color(255, 255, 255));
+        techName.setText("PlaceHolder");
 
-        lastName.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lastName.setForeground(new java.awt.Color(255, 255, 255));
-        lastName.setText("PlaceHolder");
-
-        skillTable.setModel(new javax.swing.table.DefaultTableModel(
+        skillsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Skills", "Level"
+                "ID", "Skill"
             }
-        ));
-        jScrollPane1.setViewportView(skillTable);
-        if (skillTable.getColumnModel().getColumnCount() > 0) {
-            skillTable.getColumnModel().getColumn(0).setResizable(false);
-            skillTable.getColumnModel().getColumn(1).setResizable(false);
-        }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
-        homeBtn.setBackground(new java.awt.Color(0, 153, 255));
-        homeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        homeBtn.setForeground(new java.awt.Color(255, 255, 255));
-        homeBtn.setText("Back");
-        homeBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                homeBtnActionPerformed(evt);
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane1.setViewportView(skillsTable);
+        if (skillsTable.getColumnModel().getColumnCount() > 0) {
+            skillsTable.getColumnModel().getColumn(0).setResizable(false);
+            skillsTable.getColumnModel().getColumn(1).setResizable(false);
+        }
 
-        delBtn.setBackground(new java.awt.Color(255, 0, 0));
-        delBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
-        delBtn.setForeground(new java.awt.Color(255, 255, 255));
-        delBtn.setText("Delete");
+        levelList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "SIMPLE", "INTERMEDIATE", "AVANCED ", "EXPERT" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(levelList);
 
-        addBtn.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel3.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Level :");
+
+        addBtn.setBackground(new java.awt.Color(51, 255, 0));
         addBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
         addBtn.setForeground(new java.awt.Color(255, 255, 255));
-        addBtn.setText("Add Skills");
+        addBtn.setText("Add");
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBtnActionPerformed(evt);
+            }
+        });
+
+        cancelBtn.setBackground(new java.awt.Color(255, 0, 0));
+        cancelBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
             }
         });
 
@@ -188,12 +242,12 @@ public class TechWindow extends javax.swing.JFrame {
                 .addComponent(progicielLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jakovaLabel)
-                .addGap(41, 41, 41))
+                .addGap(63, 63, 63))
         );
         lowerPanelLayout.setVerticalGroup(
             lowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lowerPanelLayout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(lowerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(supportBtn)
                     .addComponent(progicielLabel)
@@ -207,22 +261,22 @@ public class TechWindow extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(logo)
-                .addGap(274, 274, 274)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(delBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(techName)))
+                .addGap(77, 77, 77)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(addBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(homeBtn))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52))
+                        .addComponent(cancelBtn))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(33, Short.MAX_VALUE))
             .addComponent(lowerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -233,18 +287,22 @@ public class TechWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(logo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel1)
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(techName))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(homeBtn)
-                    .addComponent(delBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addBtn)
+                    .addComponent(cancelBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -262,6 +320,13 @@ public class TechWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        this.ConfirmAddSkills();
+        TechWindow techWindow = new TechWindow(this.user, this.tech);
+        techWindow.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_addBtnActionPerformed
+
     private void supportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supportBtnActionPerformed
         Desktop desktop = Desktop.getDesktop();
         String message = "mailto:Valentin_Marguerie@etu.u-bourgogne.fr?subject=Support%20Email";
@@ -273,17 +338,11 @@ public class TechWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_supportBtnActionPerformed
 
-    private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
-        TechsWindow techsWindow = new TechsWindow(this.user);
-        techsWindow.setVisible(true);
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        TechWindow techWindow = new TechWindow(this.user, this.tech);
+        techWindow.setVisible(true);
         dispose();
-    }//GEN-LAST:event_homeBtnActionPerformed
-
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        AddSkills addNew = new AddSkills(this.user, this.tech);
-        addNew.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_addBtnActionPerformed
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,37 +361,42 @@ public class TechWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TechWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSkills.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TechWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSkills.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TechWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSkills.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TechWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddSkills.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TechWindow().setVisible(true);
+                new AddSkills().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
-    private javax.swing.JButton delBtn;
-    private javax.swing.JButton homeBtn;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jakovaLabel;
-    private javax.swing.JLabel lastName;
+    private javax.swing.JList<String> levelList;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel lowerPanel;
     private javax.swing.JLabel progicielLabel;
-    private javax.swing.JTable skillTable;
+    private javax.swing.JTable skillsTable;
     private javax.swing.JButton supportBtn;
+    private javax.swing.JLabel techName;
     // End of variables declaration//GEN-END:variables
 }
