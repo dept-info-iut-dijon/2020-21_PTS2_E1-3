@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import progiciel.database.ProjectDao;
+import progiciel.logic.Project;
 import progiciel.logic.User;
 
 /**
@@ -37,6 +39,20 @@ public class AddProject extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
+    
+    /**
+     * Permet de créer un nouveau projet
+     */
+    public void Create(){
+        String name = this.nameField.getText();
+        int estimatedTime = (int)this.estimSpin.getValue();
+        String projectStatus = this.statutList.getSelectedValue().toString();
+        //Création d'un nouvel objet projet 
+        Project projectToCreate = new Project(name, 0 , projectStatus, this.lastId+1, estimatedTime);
+        //Creation du projet dans la bdd
+        ProjectDao createProject = new ProjectDao();
+        createProject.createProject(projectToCreate);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,8 +66,8 @@ public class AddProject extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        createBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
         lowerPanel = new javax.swing.JPanel();
         progicielLabel = new javax.swing.JLabel();
         jakovaLabel = new javax.swing.JLabel();
@@ -76,23 +92,23 @@ public class AddProject extends javax.swing.JFrame {
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/progiciel/hmi/images/logo.png"))); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(0, 255, 0));
-        jButton1.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Create");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        createBtn.setBackground(new java.awt.Color(0, 255, 0));
+        createBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
+        createBtn.setForeground(new java.awt.Color(255, 255, 255));
+        createBtn.setText("Create");
+        createBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                createBtnActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 0, 0));
-        jButton2.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelBtn.setBackground(new java.awt.Color(255, 0, 0));
+        cancelBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelBtnActionPerformed(evt);
             }
         });
 
@@ -145,7 +161,7 @@ public class AddProject extends javax.swing.JFrame {
         nameField.setFont(new java.awt.Font("Gill Sans MT", 0, 18)); // NOI18N
 
         statutList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "ENDED", "WAITING", "WORKING", "CANCELED" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -161,7 +177,7 @@ public class AddProject extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Estimasted time in minutes :");
+        jLabel4.setText("Estimated time in minutes :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -170,37 +186,33 @@ public class AddProject extends javax.swing.JFrame {
             .addComponent(lowerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(logo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                        .addComponent(jLabel1)))
+                .addComponent(logo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addGap(31, 31, 31))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(nameField)
-                            .addComponent(estimSpin, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
-                        .addGap(32, 32, 32))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)))
+                            .addComponent(estimSpin, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)))
+                    .addComponent(cancelBtn))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(createBtn)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(45, 45, 45))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,8 +239,8 @@ public class AddProject extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(createBtn)
+                    .addComponent(cancelBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -249,13 +261,18 @@ public class AddProject extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void createBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBtnActionPerformed
+        this.Create();
+        ProjectsWindow projectsWindow = new ProjectsWindow(this.user);
+        projectsWindow.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_createBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        ProjectsWindow projectsWindow = new ProjectsWindow(this.user);
+        projectsWindow.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void supportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supportBtnActionPerformed
         Desktop desktop = Desktop.getDesktop();
@@ -304,9 +321,9 @@ public class AddProject extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelBtn;
+    private javax.swing.JButton createBtn;
     private javax.swing.JSpinner estimSpin;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

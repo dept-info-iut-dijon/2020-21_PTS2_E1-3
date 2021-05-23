@@ -96,4 +96,23 @@ public class ProjectDao {
                 Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /**
+     * Permet de créer un nouveau projet 
+     * @param p 
+     */
+    public void createProject(Project p){
+        try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement create = myConn.createStatement();
+            
+            create.executeUpdate("INSERT INTO Projet VALUES"
+                    + "("+p.getID()+","+1+",'"+p.getName()+"',"+p.getEstimatedDurationMinutes()+","+p.getFinalDuration()+",'"+p.getStatus()+"')");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
