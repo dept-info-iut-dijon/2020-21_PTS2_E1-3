@@ -118,6 +118,25 @@ public class Project {
         return res;
     }
     
+    /**
+     * Permet de valider un projet
+     * @return 
+     */
+    public boolean Validated() {
+        boolean res = false;
+        try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ident.executeUpdate("UPDATE projet SET statut ="+"'VALIDATED'"+" WHERE id="+this.ID);
+            res = true;
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        return res;
+    }
+    
     public String getName() {
         return name;
     }
@@ -139,10 +158,19 @@ public class Project {
     }
 
     public float getEstimatedDurationHours() {
-        return estimatedDurationHours;
+        return this.estimatedDurationHours;
+        
     }
 
     public float getEstimatedDurationDays() {
         return estimatedDurationDays;
+    }
+
+    /**
+     * Donne le temps estimé au formet JJ/HH/MM
+     * @return 
+     */
+    public String getEstimatedTimeString(){
+        return this.estimatedDurationMinutes/24/60 + "Days " + this.estimatedDurationMinutes/60%24 + " Hours " + this.estimatedDurationMinutes%60+" Minutes";
     }
 }

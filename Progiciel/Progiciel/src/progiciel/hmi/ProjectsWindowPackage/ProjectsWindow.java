@@ -127,7 +127,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
         boolean res = this.changeStatus(ProjectStatus.ENDED);
         
         if(res == true){
-            StartConfirm start = new StartConfirm(this.user);
+            EndConfirm start = new EndConfirm(this.user);
             start.setVisible(true);
             dispose();
         }
@@ -140,7 +140,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
         boolean res = this.changeStatus(ProjectStatus.WAITING);
         
         if(res == true){
-            StartConfirm start = new StartConfirm(this.user);
+            WaitConfirm start = new WaitConfirm(this.user);
             start.setVisible(true);
             dispose();
         }
@@ -214,6 +214,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
         startBtn = new javax.swing.JButton();
         waitBtn = new javax.swing.JButton();
         endBtn = new javax.swing.JButton();
+        detailBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Projects");
@@ -382,6 +383,15 @@ public class ProjectsWindow extends javax.swing.JFrame {
             }
         });
 
+        detailBtn.setBackground(new java.awt.Color(51, 102, 255));
+        detailBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        detailBtn.setText("View Details");
+        detailBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                detailBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -390,13 +400,15 @@ public class ProjectsWindow extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addContainerGap()
                         .addComponent(logo)
-                        .addGap(348, 348, 348)
-                        .addComponent(titleLabel)))
+                        .addGap(361, 361, 361)
+                        .addComponent(titleLabel))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(detailBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -420,14 +432,14 @@ public class ProjectsWindow extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(logo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(returnBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(59, 59, 59)
+                            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(logo)))
+                .addGap(69, 69, 69)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -444,7 +456,9 @@ public class ProjectsWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(waitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(detailBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -511,6 +525,29 @@ public class ProjectsWindow extends javax.swing.JFrame {
         this.ended();
     }//GEN-LAST:event_endBtnActionPerformed
 
+    private void detailBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailBtnActionPerformed
+        DefaultTableModel tableData = (DefaultTableModel)this.projectTable.getModel();
+        
+        //Récupération des données 
+        String IDString = tableData.getValueAt(this.projectTable.getSelectedRow(), 0).toString();
+        String name = tableData.getValueAt(this.projectTable.getSelectedRow(), 1).toString();
+        String estimatedTimeString = tableData.getValueAt(this.projectTable.getSelectedRow(), 2).toString();
+        String durationString = tableData.getValueAt(this.projectTable.getSelectedRow(), 3).toString();
+        String status = tableData.getValueAt(this.projectTable.getSelectedRow(), 4).toString();
+        
+        //Conversion
+        int ID = Integer.parseInt(IDString);
+        int estimatedMinutes = Integer.parseInt(estimatedTimeString);
+        int finaleDuration = Integer.parseInt(durationString);
+        
+        //Création d'un object projet
+        Project projectToUpdate = new Project(name, finaleDuration, status, ID, estimatedMinutes);
+        
+        ProjectWindow projectToSee = new ProjectWindow(this.user, projectToUpdate);
+        projectToSee.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_detailBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -549,6 +586,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton closeBtn;
+    private javax.swing.JButton detailBtn;
     private javax.swing.JButton endBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
