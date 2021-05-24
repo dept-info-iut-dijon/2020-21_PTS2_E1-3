@@ -77,6 +77,31 @@ public class TechWindow extends javax.swing.JFrame {
         }
     }
     
+    public boolean deleteSkill(){
+        boolean res = false;
+        try {
+            DefaultTableModel tableData = (DefaultTableModel)this.skillTable.getModel();
+            String name = tableData.getValueAt(this.skillTable.getSelectedRow(), 0).toString();
+            
+            //Connection to the DB
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            Statement delete = myConn.createStatement();
+            ResultSet myRs = ident.executeQuery("SELECT ID FROM COMPETENCE WHERE NOM='"+name+"'");
+            
+            while(myRs.next()){
+                int IDskill = Integer.parseInt(myRs.getString("id"));
+                delete.executeUpdate("DELETE FROM possede WHERE competenceID="+IDskill+" AND technicienID="+this.tech.getID());
+            }
+            
+            res = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(TechWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return res; 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,7 +125,7 @@ public class TechWindow extends javax.swing.JFrame {
         jakovaLabel = new javax.swing.JLabel();
         supportBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(46, 48, 47));
@@ -151,6 +176,11 @@ public class TechWindow extends javax.swing.JFrame {
         delBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
         delBtn.setForeground(new java.awt.Color(255, 255, 255));
         delBtn.setText("Delete");
+        delBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delBtnActionPerformed(evt);
+            }
+        });
 
         addBtn.setBackground(new java.awt.Color(255, 153, 0));
         addBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
@@ -292,6 +322,17 @@ public class TechWindow extends javax.swing.JFrame {
         addNew.setVisible(true);
         dispose();
     }//GEN-LAST:event_addBtnActionPerformed
+
+    private void delBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delBtnActionPerformed
+        boolean res = this.deleteSkill();
+        
+        if(res == true){
+            DeleteConfirm deleteConf =  new DeleteConfirm(this.user, this.tech);
+            deleteConf.setVisible(true);
+            dispose();
+        }
+        
+    }//GEN-LAST:event_delBtnActionPerformed
 
     /**
      * @param args the command line arguments
