@@ -171,6 +171,6 @@ public class Project {
      * @return 
      */
     public String getEstimatedTimeString(){
-        return this.estimatedDurationMinutes/24/60 + "Days " + this.estimatedDurationMinutes/60%24 + " Hours " + this.estimatedDurationMinutes%60+" Minutes";
+        return this.estimatedDurationMinutes/24/60 + " Days " + this.estimatedDurationMinutes/60%24 + " Hours " + this.estimatedDurationMinutes%60+" Minutes";
     }
 }
