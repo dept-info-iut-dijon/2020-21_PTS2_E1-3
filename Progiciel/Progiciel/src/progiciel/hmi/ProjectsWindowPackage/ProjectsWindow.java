@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import progiciel.database.ProjectDao;
 import progiciel.hmi.MainWindowPackage.MainWindow;
 import progiciel.logic.Project;
+import progiciel.logic.ProjectStatus;
 import progiciel.logic.User;
 
 /**
@@ -94,9 +95,63 @@ public class ProjectsWindow extends javax.swing.JFrame {
     }
     
     /**
-     * Suppresion d'un projet 
+     * Fermeture d'un projet 
      */
     public void close(){
+        boolean res = this.changeStatus(ProjectStatus.ENDED);
+        
+        if(res == true){
+            DeleteConfirm delete = new DeleteConfirm(this.user);
+            delete.setVisible(true);
+            dispose();
+        }
+    }
+    
+    /**
+     * Permet de démarrer un projet 
+     */
+    public void start(){
+        boolean res = this.changeStatus(ProjectStatus.WORKING);
+        
+        if(res == true){
+            StartConfirm start = new StartConfirm(this.user);
+            start.setVisible(true);
+            dispose();
+        }
+    }
+    
+    /**
+     * Permet de définir un projet comme fini
+     */
+    public void ended(){
+        boolean res = this.changeStatus(ProjectStatus.ENDED);
+        
+        if(res == true){
+            StartConfirm start = new StartConfirm(this.user);
+            start.setVisible(true);
+            dispose();
+        }
+    }
+    
+    /**
+     * PErmet de mettre un projet en attente 
+     */
+    public void waiting(){
+        boolean res = this.changeStatus(ProjectStatus.WAITING);
+        
+        if(res == true){
+            StartConfirm start = new StartConfirm(this.user);
+            start.setVisible(true);
+            dispose();
+        }
+    }
+    
+    /**
+     * PErmet de chnager le statut d'un projet 
+     * @param newStatus nouveau statut du projet
+     * @return 
+     */
+    public boolean changeStatus(ProjectStatus newStatus){
         DefaultTableModel tableData = (DefaultTableModel)this.projectTable.getModel();
         
         //Récupération des données 
@@ -113,13 +168,24 @@ public class ProjectsWindow extends javax.swing.JFrame {
         
         //Création d'un object projet
         Project projectToUpdate = new Project(name, finaleDuration, status, ID, estimatedMinutes);
+        boolean res = false;
         
-        boolean res = projectToUpdate.Cancel();
-        if(res == true){
-            DeleteConfirm delete = new DeleteConfirm(this.user);
-            delete.setVisible(true);
-            dispose();
+        switch(newStatus){
+            case WAITING:
+                res = projectToUpdate.Waiting();
+                break;
+            case WORKING:
+                res = projectToUpdate.Start();
+                break;
+            case ENDED:
+                res = projectToUpdate.Ended();
+                break;
+            case CANCELED:
+                res = projectToUpdate.Cancel();
+                break;
         }
+        
+        return res;
     }
 
     /**
@@ -145,6 +211,9 @@ public class ProjectsWindow extends javax.swing.JFrame {
         returnBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        startBtn = new javax.swing.JButton();
+        waitBtn = new javax.swing.JButton();
+        endBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Projects");
@@ -172,7 +241,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true
+                false, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -201,7 +270,8 @@ public class ProjectsWindow extends javax.swing.JFrame {
 
         closeBtn.setBackground(new java.awt.Color(255, 51, 51));
         closeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
-        closeBtn.setText("Close");
+        closeBtn.setText("Cancel Project");
+        closeBtn.setToolTipText("");
         closeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeBtnActionPerformed(evt);
@@ -285,6 +355,33 @@ public class ProjectsWindow extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Edit or Cancel Projects");
 
+        startBtn.setBackground(new java.awt.Color(0, 204, 51));
+        startBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        startBtn.setText("Start Project");
+        startBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startBtnActionPerformed(evt);
+            }
+        });
+
+        waitBtn.setBackground(new java.awt.Color(204, 0, 255));
+        waitBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        waitBtn.setText("Waiting");
+        waitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                waitBtnActionPerformed(evt);
+            }
+        });
+
+        endBtn.setBackground(new java.awt.Color(255, 153, 0));
+        endBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
+        endBtn.setText("End Project");
+        endBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -300,22 +397,23 @@ public class ProjectsWindow extends javax.swing.JFrame {
                         .addComponent(logo)
                         .addGap(348, 348, 348)
                         .addComponent(titleLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(returnBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(uptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(startBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(waitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(endBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(58, 58, 58))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(returnBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60))))
+                        .addComponent(jLabel1)
+                        .addGap(16, 16, 16))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,13 +430,19 @@ public class ProjectsWindow extends javax.swing.JFrame {
                 .addGap(59, 59, 59)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(uptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(uptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(startBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(endBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(waitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(lowerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -395,6 +499,18 @@ public class ProjectsWindow extends javax.swing.JFrame {
         this.modify();
     }//GEN-LAST:event_uptBtnActionPerformed
 
+    private void startBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startBtnActionPerformed
+        this.start();
+    }//GEN-LAST:event_startBtnActionPerformed
+
+    private void waitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waitBtnActionPerformed
+        this.waiting();
+    }//GEN-LAST:event_waitBtnActionPerformed
+
+    private void endBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endBtnActionPerformed
+        this.ended();
+    }//GEN-LAST:event_endBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -433,6 +549,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton closeBtn;
+    private javax.swing.JButton endBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -442,8 +559,10 @@ public class ProjectsWindow extends javax.swing.JFrame {
     private javax.swing.JLabel progicielLabel;
     private javax.swing.JTable projectTable;
     private javax.swing.JButton returnBtn;
+    private javax.swing.JButton startBtn;
     private javax.swing.JButton supportBtn;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton uptBtn;
+    private javax.swing.JButton waitBtn;
     // End of variables declaration//GEN-END:variables
 }

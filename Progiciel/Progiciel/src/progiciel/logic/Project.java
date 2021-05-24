@@ -47,8 +47,19 @@ public class Project {
     /**
      * Permet de démarer un projet (Conception adpatée aux besoins du projet)
      */
-    public void Start(){
-
+    public boolean Start(){
+        boolean res = false;
+        try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ident.executeUpdate("UPDATE projet SET statut ="+"'"+ProjectStatus.WORKING+"'"+" WHERE id="+this.ID);
+            res = true;
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        return res;
     }
     
     /**
@@ -68,7 +79,45 @@ public class Project {
             } 
         return res;
     }
-
+    
+    /**
+     * Met un projet en attente 
+     * @return 
+     */
+    public boolean Waiting(){
+        boolean res = false;
+        try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ident.executeUpdate("UPDATE projet SET statut ="+"'"+ProjectStatus.WAITING+"'"+" WHERE id="+this.ID);
+            res = true;
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        return res;
+    }
+    
+    /**
+     * Défini le projet comme terminé
+     * @return 
+     */
+    public boolean Ended(){
+        boolean res = false;
+        try {
+            //Connection to the DB
+            Connection myConn;
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","root");
+            Statement ident = myConn.createStatement();
+            ident.executeUpdate("UPDATE projet SET statut ="+"'"+ProjectStatus.ENDED+"'"+" WHERE id="+this.ID);
+            res = true;
+            } catch (SQLException ex) {
+                Logger.getLogger(ProfileWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        return res;
+    }
+    
     public String getName() {
         return name;
     }

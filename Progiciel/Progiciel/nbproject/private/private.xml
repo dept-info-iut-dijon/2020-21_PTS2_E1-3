@@ -4,10 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/margu/Documents/2020-21_PTS2_E1-3/Progiciel/Progiciel/src/progiciel/hmi/ProjectsWindowPackage/ProjectsWindow.java</file>
-            <file>file:/C:/Users/margu/Documents/2020-21_PTS2_E1-3/Progiciel/Progiciel/src/progiciel/hmi/ProjectsWindowPackage/AddProject.java</file>
-            <file>file:/C:/Users/margu/Documents/2020-21_PTS2_E1-3/Progiciel/Progiciel/src/progiciel/logic/Project.java</file>
-            <file>file:/C:/Users/margu/Documents/2020-21_PTS2_E1-3/Progiciel/Progiciel/src/progiciel/database/ProjectDao.java</file>
-            <file>file:/C:/Users/margu/Documents/2020-21_PTS2_E1-3/Progiciel/Progiciel/src/progiciel/logic/ProjectStatus.java</file>
+            <file>file:/C:/Users/margu/Documents/2020-21_PTS2_E1-3/Progiciel/Progiciel/src/progiciel/hmi/TechsWindow/TechsWindow.java</file>
+            <file>file:/C:/Users/margu/Documents/2020-21_PTS2_E1-3/Progiciel/Progiciel/src/progiciel/hmi/TechsWindow/TechWindow.java</file>
+            <file>file:/C:/Users/margu/Documents/2020-21_PTS2_E1-3/Progiciel/Progiciel/src/progiciel/hmi/TechsWindow/AddSkills.java</file>
         </group>
     </open-files>
 </project-private>
