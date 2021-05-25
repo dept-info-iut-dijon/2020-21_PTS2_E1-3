@@ -41,6 +41,7 @@ public class TechsWindow extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
+        this.techsTable.setAutoCreateRowSorter(true);
         //Load all the techs
         UserDao techLoader = new UserDao();
         ResultSet loader = techLoader.listTech();

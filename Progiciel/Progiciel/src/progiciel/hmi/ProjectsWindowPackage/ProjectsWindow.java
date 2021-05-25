@@ -43,6 +43,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
+        this.projectTable.setAutoCreateRowSorter(true);
         ProjectDao projectLoader = new ProjectDao();
         ResultSet loader = projectLoader.listAll();
         
