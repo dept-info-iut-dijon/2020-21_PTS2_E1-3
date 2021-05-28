@@ -50,7 +50,7 @@ public class ProfileWindow extends javax.swing.JFrame {
         String passString = "";
         
         //Modification mot de passe 
-        if(!this.passwordField.equals(null)){
+        if(this.passwordField.getPassword().length != 0){
             if(this.comparePassword(this.passwordField.getPassword(), this.confirmationField.getPassword())){
                 passwordArray = this.passwordField.getPassword();
                 for(int i = 0; i != passwordArray.length; i++){
