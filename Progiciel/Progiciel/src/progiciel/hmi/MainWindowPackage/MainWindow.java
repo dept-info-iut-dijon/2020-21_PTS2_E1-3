@@ -48,6 +48,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.welcomeLabel.setText("Welcome "+this.user.getLogin()+" !");
         this.welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         
+        
         //Donne accès au uptBtn uniquement au compte pmartin 
         if(this.user.getID() != 1){
             this.uptBtn.setVisible(false);
@@ -310,7 +311,7 @@ public class MainWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(messageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(messageLabel)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
