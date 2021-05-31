@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javax.swing.SwingConstants.CENTER;
 import javax.swing.table.DefaultTableModel;
 import progiciel.database.MessageDao;
 import progiciel.database.ProjectDao;
@@ -45,6 +46,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         this.user = user;
         this.welcomeLabel.setText("Welcome "+this.user.getLogin()+" !");
+        this.welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         
         //Donne accès au uptBtn uniquement au compte pmartin 
         if(this.user.getID() != 1){
