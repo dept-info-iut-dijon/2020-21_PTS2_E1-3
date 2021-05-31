@@ -5,6 +5,7 @@
  */
 package progiciel.hmi.MainWindowPackage;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -12,7 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static javax.swing.SwingConstants.CENTER;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import progiciel.database.MessageDao;
 import progiciel.database.ProjectDao;
@@ -46,7 +48,6 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         this.user = user;
         this.welcomeLabel.setText("Welcome "+this.user.getLogin()+" !");
-        this.welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         
         
         //Donne accès au uptBtn uniquement au compte pmartin 
@@ -136,8 +137,11 @@ public class MainWindow extends javax.swing.JFrame {
             MessageDao messageLoader = new MessageDao();
             ResultSet loader = messageLoader.listAll();
             
-            while(loader.next()){
-                this.messageLabel.setText(loader.getString("text"));
+            while(loader.next()){                
+                this.messageLabel.setHorizontalAlignment(SwingConstants.CENTER);                
+                this.messageLabel.setVerticalAlignment(SwingConstants.CENTER);
+                
+                this.messageLabel.setText(loader.getString("text"));                
             }
             
         } catch (SQLException ex) {
@@ -215,7 +219,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(supportBtn)
                 .addGap(28, 28, 28)
                 .addComponent(progicielLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 723, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jakovaLabel)
                 .addGap(63, 63, 63))
         );
@@ -304,6 +308,13 @@ public class MainWindow extends javax.swing.JFrame {
         messageLabel.setBackground(new java.awt.Color(0, 0, 0));
         messageLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
         messageLabel.setForeground(new java.awt.Color(0, 0, 0));
+        messageLabel.setText("Placeholder");
+        messageLabel.setAutoscrolls(true);
+        messageLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        messageLabel.setMaximumSize(new java.awt.Dimension(1240, 40));
+        messageLabel.setMinimumSize(new java.awt.Dimension(1240, 40));
+        messageLabel.setName(""); // NOI18N
+        messageLabel.setPreferredSize(new java.awt.Dimension(1240, 40));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -311,14 +322,14 @@ public class MainWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(messageLabel)
-                .addContainerGap())
+                .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(messageLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
