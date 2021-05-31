@@ -138,10 +138,7 @@ public class MainWindow extends javax.swing.JFrame {
             ResultSet loader = messageLoader.listAll();
             
             while(loader.next()){                
-                this.messageLabel.setHorizontalAlignment(SwingConstants.CENTER);                
-                this.messageLabel.setVerticalAlignment(SwingConstants.CENTER);
-                
-                this.messageLabel.setText(loader.getString("text"));                
+                this.messageLabel.setText(loader.getString("text"));
             }
             
         } catch (SQLException ex) {
@@ -308,6 +305,7 @@ public class MainWindow extends javax.swing.JFrame {
         messageLabel.setBackground(new java.awt.Color(0, 0, 0));
         messageLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
         messageLabel.setForeground(new java.awt.Color(0, 0, 0));
+        messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         messageLabel.setText("Placeholder");
         messageLabel.setAutoscrolls(true);
         messageLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
