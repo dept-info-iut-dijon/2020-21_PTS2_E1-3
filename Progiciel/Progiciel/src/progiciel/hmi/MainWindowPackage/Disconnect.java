@@ -60,7 +60,6 @@ public class Disconnect extends javax.swing.JFrame {
 
         disconnectBtn.setBackground(new java.awt.Color(255, 0, 0));
         disconnectBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        disconnectBtn.setForeground(new java.awt.Color(255, 255, 255));
         disconnectBtn.setText("Disconnect");
         disconnectBtn.setBorderPainted(false);
         disconnectBtn.setFocusPainted(false);
@@ -72,7 +71,6 @@ public class Disconnect extends javax.swing.JFrame {
 
         homeBtn.setBackground(new java.awt.Color(237, 132, 38));
         homeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        homeBtn.setForeground(new java.awt.Color(255, 255, 255));
         homeBtn.setText("Cancel");
         homeBtn.setBorderPainted(false);
         homeBtn.setFocusPainted(false);
@@ -84,7 +82,6 @@ public class Disconnect extends javax.swing.JFrame {
 
         closeBtn.setBackground(new java.awt.Color(255, 0, 0));
         closeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        closeBtn.setForeground(new java.awt.Color(255, 255, 255));
         closeBtn.setText("Close ");
         closeBtn.setBorderPainted(false);
         closeBtn.setFocusPainted(false);

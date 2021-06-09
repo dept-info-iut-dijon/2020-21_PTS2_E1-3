@@ -42,7 +42,6 @@ public class UpdateConfirmation extends javax.swing.JFrame {
 
         exitBtn.setBackground(new java.awt.Color(51, 255, 0));
         exitBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        exitBtn.setForeground(new java.awt.Color(255, 255, 255));
         exitBtn.setText("Perfect !");
         exitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

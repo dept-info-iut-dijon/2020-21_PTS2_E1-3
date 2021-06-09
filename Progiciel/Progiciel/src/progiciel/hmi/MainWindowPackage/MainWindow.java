@@ -187,16 +187,13 @@ public class MainWindow extends javax.swing.JFrame {
         lowerPanel.setBackground(new java.awt.Color(153, 153, 153));
 
         progicielLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        progicielLabel.setForeground(new java.awt.Color(0, 0, 0));
         progicielLabel.setText("Progiciel V0.1 for MSP gmBH.");
 
         jakovaLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        jakovaLabel.setForeground(new java.awt.Color(0, 0, 0));
         jakovaLabel.setText("© 2021 Jakova.All rigths reserved");
 
         supportBtn.setBackground(new java.awt.Color(153, 153, 153));
         supportBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        supportBtn.setForeground(new java.awt.Color(0, 0, 0));
         supportBtn.setText("Support");
         supportBtn.setBorderPainted(false);
         supportBtn.setFocusPainted(false);
@@ -235,7 +232,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         logoutBtn.setBackground(new java.awt.Color(255, 51, 51));
         logoutBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
         logoutBtn.setText("Disconnect");
         logoutBtn.setBorderPainted(false);
         logoutBtn.setFocusPainted(false);
@@ -247,7 +243,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         profilBtn.setBackground(new java.awt.Color(237, 132, 38));
         profilBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        profilBtn.setForeground(new java.awt.Color(255, 255, 255));
         profilBtn.setText("My Profil");
         profilBtn.setBorderPainted(false);
         profilBtn.setFocusPainted(false);
@@ -257,9 +252,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        projectTable.setBackground(new java.awt.Color(255, 255, 255));
         projectTable.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        projectTable.setForeground(new java.awt.Color(0, 0, 0));
         projectTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -304,7 +297,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         messageLabel.setBackground(new java.awt.Color(0, 0, 0));
         messageLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
-        messageLabel.setForeground(new java.awt.Color(0, 0, 0));
         messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         messageLabel.setText("Placeholder");
         messageLabel.setAutoscrolls(true);
@@ -386,7 +378,7 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(logoutBtn)
                                     .addComponent(profilBtn))))
-                        .addGap(0, 24, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(logo, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tableLabel)
@@ -402,7 +394,6 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuBar1.setOpaque(false);
 
         homeMenu.setBackground(new java.awt.Color(153, 153, 153));
-        homeMenu.setForeground(new java.awt.Color(0, 0, 0));
         homeMenu.setText("Menu");
         homeMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

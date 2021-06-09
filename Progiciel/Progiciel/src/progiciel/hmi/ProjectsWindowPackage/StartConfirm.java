@@ -55,7 +55,6 @@ public class StartConfirm extends javax.swing.JFrame {
 
         okBtn.setBackground(new java.awt.Color(51, 204, 0));
         okBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        okBtn.setForeground(new java.awt.Color(255, 255, 255));
         okBtn.setText("Perfect !");
         okBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

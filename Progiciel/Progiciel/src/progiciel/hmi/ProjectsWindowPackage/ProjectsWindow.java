@@ -230,7 +230,6 @@ public class ProjectsWindow extends javax.swing.JFrame {
         titleLabel.setText("Projects :");
 
         projectTable.setBackground(new java.awt.Color(153, 153, 153));
-        projectTable.setForeground(new java.awt.Color(0, 0, 0));
         projectTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -292,16 +291,13 @@ public class ProjectsWindow extends javax.swing.JFrame {
         lowerPanel.setBackground(new java.awt.Color(153, 153, 153));
 
         progicielLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        progicielLabel.setForeground(new java.awt.Color(0, 0, 0));
         progicielLabel.setText("Progiciel V0.1 for MSP gmBH.");
 
         jakovaLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        jakovaLabel.setForeground(new java.awt.Color(0, 0, 0));
         jakovaLabel.setText("© 2021 Jakova.All rigths reserved");
 
         supportBtn.setBackground(new java.awt.Color(153, 153, 153));
         supportBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        supportBtn.setForeground(new java.awt.Color(0, 0, 0));
         supportBtn.setText("Support");
         supportBtn.setBorderPainted(false);
         supportBtn.setFocusPainted(false);
@@ -366,7 +362,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
             }
         });
 
-        waitBtn.setBackground(new java.awt.Color(204, 0, 255));
+        waitBtn.setBackground(new java.awt.Color(204, 204, 204));
         waitBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
         waitBtn.setText("Waiting");
         waitBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -375,7 +371,7 @@ public class ProjectsWindow extends javax.swing.JFrame {
             }
         });
 
-        endBtn.setBackground(new java.awt.Color(255, 153, 0));
+        endBtn.setBackground(new java.awt.Color(204, 204, 204));
         endBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
         endBtn.setText("End Project");
         endBtn.addActionListener(new java.awt.event.ActionListener() {

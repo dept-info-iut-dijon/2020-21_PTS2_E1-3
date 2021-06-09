@@ -94,7 +94,6 @@ public class AddProject extends javax.swing.JFrame {
 
         createBtn.setBackground(new java.awt.Color(0, 255, 0));
         createBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        createBtn.setForeground(new java.awt.Color(255, 255, 255));
         createBtn.setText("Create");
         createBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,7 +103,6 @@ public class AddProject extends javax.swing.JFrame {
 
         cancelBtn.setBackground(new java.awt.Color(255, 0, 0));
         cancelBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        cancelBtn.setForeground(new java.awt.Color(255, 255, 255));
         cancelBtn.setText("Cancel");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,16 +113,13 @@ public class AddProject extends javax.swing.JFrame {
         lowerPanel.setBackground(new java.awt.Color(153, 153, 153));
 
         progicielLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        progicielLabel.setForeground(new java.awt.Color(0, 0, 0));
         progicielLabel.setText("Progiciel V0.1 for MSP gmBH.");
 
         jakovaLabel.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        jakovaLabel.setForeground(new java.awt.Color(0, 0, 0));
         jakovaLabel.setText("© 2021 Jakova.All rigths reserved");
 
         supportBtn.setBackground(new java.awt.Color(153, 153, 153));
         supportBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 12)); // NOI18N
-        supportBtn.setForeground(new java.awt.Color(0, 0, 0));
         supportBtn.setText("Support");
         supportBtn.setBorderPainted(false);
         supportBtn.setFocusPainted(false);

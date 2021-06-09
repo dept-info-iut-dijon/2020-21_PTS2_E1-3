@@ -53,7 +53,6 @@ public class WaitConfirm extends javax.swing.JFrame {
         jLabel1.setText("Project in wait");
 
         continueBtn.setBackground(new java.awt.Color(51, 204, 0));
-        continueBtn.setForeground(new java.awt.Color(255, 255, 255));
         continueBtn.setText("Continue");
         continueBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

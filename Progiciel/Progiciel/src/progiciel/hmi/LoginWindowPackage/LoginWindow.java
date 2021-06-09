@@ -102,7 +102,6 @@ public class LoginWindow extends javax.swing.JFrame {
 
         cancelBtn.setBackground(new java.awt.Color(255, 0, 0));
         cancelBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        cancelBtn.setForeground(new java.awt.Color(255, 255, 255));
         cancelBtn.setText("Cancel");
         cancelBtn.setBorderPainted(false);
         cancelBtn.setFocusPainted(false);
@@ -114,10 +113,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
         connectBtn.setBackground(new java.awt.Color(51, 204, 0));
         connectBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        connectBtn.setForeground(new java.awt.Color(255, 255, 255));
         connectBtn.setText("Connect");
-        connectBtn.setBorderPainted(false);
-        connectBtn.setFocusPainted(false);
         connectBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 connectBtnActionPerformed(evt);
@@ -168,7 +164,7 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cancelBtn)
                     .addComponent(connectBtn))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

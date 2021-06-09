@@ -48,7 +48,6 @@ public class UnsafePass extends javax.swing.JFrame {
 
         returnBtn.setBackground(new java.awt.Color(0, 153, 0));
         returnBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 18)); // NOI18N
-        returnBtn.setForeground(new java.awt.Color(255, 255, 255));
         returnBtn.setText("Try Again");
         returnBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -63,7 +63,6 @@ public class popUp extends javax.swing.JFrame {
 
         loginBtn.setBackground(new java.awt.Color(237, 132, 38));
         loginBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        loginBtn.setForeground(new java.awt.Color(255, 255, 255));
         loginBtn.setText("Log In");
         loginBtn.setBorderPainted(false);
         loginBtn.setFocusPainted(false);

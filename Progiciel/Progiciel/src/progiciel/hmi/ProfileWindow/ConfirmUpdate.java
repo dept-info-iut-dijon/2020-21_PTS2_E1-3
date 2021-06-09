@@ -42,7 +42,6 @@ public class ConfirmUpdate extends javax.swing.JFrame {
 
         continueBtn.setBackground(new java.awt.Color(51, 204, 0));
         continueBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        continueBtn.setForeground(new java.awt.Color(255, 255, 255));
         continueBtn.setText("Continue");
         continueBtn.setBorderPainted(false);
         continueBtn.setFocusPainted(false);

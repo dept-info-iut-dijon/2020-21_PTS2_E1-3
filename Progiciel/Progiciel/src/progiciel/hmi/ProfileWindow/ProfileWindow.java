@@ -212,7 +212,6 @@ public class ProfileWindow extends javax.swing.JFrame {
 
         homeBtn.setBackground(new java.awt.Color(255, 102, 0));
         homeBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        homeBtn.setForeground(new java.awt.Color(255, 255, 255));
         homeBtn.setText("Home");
         homeBtn.setBorderPainted(false);
         homeBtn.setFocusPainted(false);
@@ -224,7 +223,6 @@ public class ProfileWindow extends javax.swing.JFrame {
 
         confirmBtn.setBackground(new java.awt.Color(0, 255, 0));
         confirmBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
-        confirmBtn.setForeground(new java.awt.Color(255, 255, 255));
         confirmBtn.setText("Confirm");
         confirmBtn.setBorderPainted(false);
         confirmBtn.setFocusPainted(false);
